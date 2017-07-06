@@ -1,14 +1,14 @@
 {
-  "name": "assignment1",
+  "name": "ugurkodak",
   "version": "1.0.0",
-  "description": "COMP308 Assignment 1 - Profile Page",
+  "description": "Ugur Kodak's personal web site",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ugurkodak/COMP308_Assignment1.git"
+    "url": "git+https://github.com/ugurkodak/ugurkodak.git"
   },
   "keywords": [
     "ugur",
@@ -22,11 +22,14 @@
   "author": "Ugur Kodak",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ugurkodak/COMP308_Assignment1/issues"
+    "url": "https://github.com/ugurkodak/ugurkodak/issues"
   },
-  "homepage": "https://github.com/ugurkodak/COMP308_Assignment1#readme",
+  "homepage": "https://github.com/ugurkodak/ugurkodak#readme",
   "dependencies": {
+    "body-parser": "^1.16.1",
     "ejs": "^2.5.5",
-    "express": "^4.14.1"
+    "express": "^4.14.1",
+    "express-session": "^1.15.1",
+    "mongoose": "^4.11.1"
   }
 }

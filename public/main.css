@@ -1,0 +1,79 @@
+body
+{
+    background-color: #000;
+    color: #aaa;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+hr
+{
+    border-color: #555;
+    margin: 0px;
+    padding: 0px;
+}
+
+.row
+{
+    margin-bottom: 10px;
+}
+
+.highlight
+{
+    background-color: #222;
+    color: #ccc;
+    border: none;
+    border-radius: 0px;
+}
+
+.inline-link
+{
+    color: #5af;
+    font-size: 18px;
+    text-decoration: none;
+}
+.inline-link:hover,
+.inline-link:focus,
+.inline-link:active
+{
+    color: #fb5;
+    text-decoration: none;
+    outline: 0;
+}
+
+.form-message input,
+.form-message textarea,
+.form-message button
+{
+    outline: 0;
+    background-color: #222;
+    color: #ccc;
+    border-color: #000;
+    border-radius: 0px;
+    font-size:16px;
+}
+.form-message input:focus,
+.form-message textarea:focus
+{
+    outline: 0;
+    border-color: #fb5;
+}
+.form-message textarea
+{
+    resize: vertical;
+    overflow: hidden;
+}
+.form-message button:hover,
+.form-message button:active,
+.form-message button:focus
+{
+    outline: 0;
+    color: #000;
+    background-color: #fb5;
+    border-color: #000;
+}
+
+.copy
+{
+    font-size: 11px;
+}
