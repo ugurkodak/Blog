@@ -10,7 +10,6 @@ module.exports.displayHome = (req, res) => {
 
 module.exports.displayLogin = (req, res) => {
     if (!req.user){
-	console.log("Display login");
 	res.render("login", {
 	    title: "Ugur Kodak | Login"
 	});

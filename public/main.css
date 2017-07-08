@@ -1,3 +1,8 @@
+*
+{
+    border-radius: 0px !important;
+}
+
 body
 {
     background-color: #000;
@@ -18,59 +23,67 @@ hr
     margin-bottom: 10px;
 }
 
-.highlight
+.main-theme .highlight-line
 {
     background-color: #222;
     color: #ccc;
     border: none;
-    border-radius: 0px;
 }
 
-.inline-link
+.main-theme .inline-link
 {
     color: #5af;
     font-size: 18px;
     text-decoration: none;
 }
-.inline-link:hover,
-.inline-link:focus,
-.inline-link:active
+
+.main-theme .inline-link:hover,
+.main-theme .inline-link:focus,
+.main-theme .inline-link:active
 {
     color: #fb5;
     text-decoration: none;
     outline: 0;
 }
 
-.form-theme input,
-.form-theme textarea,
-.form-theme button
+.main-theme input,
+.main-theme textarea,
+.main-theme .btn-default
 {
     outline: 0;
     background-color: #222;
     color: #ccc;
     border-color: #000;
-    border-radius: 0px;
     font-size:16px;
 }
-.form-theme input:focus,
-.form-theme textarea:focus
+
+.main-theme input:focus,
+.main-theme textarea:focus
 {
     outline: 0;
     border-color: #fb5;
 }
-.form-theme textarea
+
+.main-theme textarea
 {
     resize: vertical;
     overflow: hidden;
 }
-.form-theme button:hover,
-.form-theme button:active,
-.form-theme button:focus
+
+.main-theme .btn-default:hover,
+.main-theme .btn-default:focus,
+.main-theme .btn-default:active,
+.main-theme .btn-default:target
 {
     outline: 0;
     color: #000;
     background-color: #fb5;
     border-color: #000;
+}
+
+.main-theme .btn-older-post
+{
+    font-size: 14px;
 }
 
 .copy
