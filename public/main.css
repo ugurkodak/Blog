@@ -41,9 +41,9 @@ hr
     outline: 0;
 }
 
-.form-message input,
-.form-message textarea,
-.form-message button
+.form-theme input,
+.form-theme textarea,
+.form-theme button
 {
     outline: 0;
     background-color: #222;
@@ -52,20 +52,20 @@ hr
     border-radius: 0px;
     font-size:16px;
 }
-.form-message input:focus,
-.form-message textarea:focus
+.form-theme input:focus,
+.form-theme textarea:focus
 {
     outline: 0;
     border-color: #fb5;
 }
-.form-message textarea
+.form-theme textarea
 {
     resize: vertical;
     overflow: hidden;
 }
-.form-message button:hover,
-.form-message button:active,
-.form-message button:focus
+.form-theme button:hover,
+.form-theme button:active,
+.form-theme button:focus
 {
     outline: 0;
     color: #000;
