@@ -48,7 +48,8 @@ hr
 
 .main-theme input,
 .main-theme textarea,
-.main-theme .btn-default
+.main-theme .btn-default,
+.main-theme select
 {
     outline: 0;
     background-color: #222;
@@ -58,7 +59,8 @@ hr
 }
 
 .main-theme input:focus,
-.main-theme textarea:focus
+.main-theme textarea:focus,
+.main-theme select:focus
 {
     outline: 0;
     border-color: #fb5;

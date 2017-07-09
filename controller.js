@@ -3,8 +3,16 @@ let passport = require("passport");
 let models = require("./models");
 
 module.exports.displayHome = (req, res) => {
-    res.render("home", {
-	title: "Ugur Kodak | Home"
+    models.topic.find((err, topics) => {
+	if (err) {
+	    console.log(err);
+	    res.end(err);
+	} else {
+	    res.render("home", {
+		title: "Ugur Kodak | Home",
+		topics: topics
+	    });
+	}
     });
 }
 
@@ -45,6 +53,26 @@ module.exports.displayNewPost = (req, res) => {
     res.render("newpost", {
 	title: "Ugur Kodak | New Post"
     });
+}
+
+module.exports.createNewPost = (req, res) => {
+    if (req.body.selectTopic == "new") {
+	models.topic.create(models.topic({
+	    title: req.body.topicTitle,
+	    description: req.body.topicDescription,
+	    posts: {
+		title: req.body.postTitle,
+		content: req.body.postContent
+	    }
+	}), (err, topic) => {
+	    if (err) {
+		console.log(err);
+		res.end(err);
+	    } else {	
+		res.redirect("/");
+	    }
+	});
+    }
 }
 
 module.exports.requireAuth = (req, res, next) => {
