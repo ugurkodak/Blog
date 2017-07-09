@@ -19,11 +19,21 @@ module.exports.displayLogin = (req, res) => {
     }
 }
 
-module.exports.processLogin = () => {
-    return passport.authenticate("local", {
-	successRedirect: "/",
-	failureRedirect: "/login"
-    })
+module.exports.processLogin = (req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+	if(err) {
+	    return next(err);
+	}
+	if(!user) {
+	    return res.redirect("/login");
+	}
+	req.logIn(user, function(err) {
+	    if (err) {
+		return next(err);
+	    }
+	    return res.redirect(req.session.redirect ? req.session.redirect : "/");
+	});
+    })(req, res, next);
 }
 
 module.exports.processLogout = (req, res) => {
@@ -39,6 +49,7 @@ module.exports.displayNewPost = (req, res) => {
 
 module.exports.requireAuth = (req, res, next) => {
     if (!req.isAuthenticated()) {
+	req.session.redirect = req.path;
 	return res.redirect("/login");
     }
     next();
