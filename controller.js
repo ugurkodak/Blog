@@ -8,6 +8,16 @@ module.exports.displayHome = (req, res) => {
 	    console.log(err);
 	    res.end(err);
 	} else {
+	    //Sort posts by date
+	    for (let i = 0; i < topics.length; i++) {
+		topics[i].posts.sort((a, b) => {
+		    return b.date - a.date;
+		});
+	    }
+	    //Sort topics by most recent post
+	    topics.sort((a, b) => {
+		return b.posts[0].date - a.posts[0].date;
+	    });
 	    res.render("home", {
 		title: "Ugur Kodak | Home",
 		topics: topics
@@ -50,9 +60,18 @@ module.exports.processLogout = (req, res) => {
 }
 
 module.exports.displayNewPost = (req, res) => {
-    res.render("newpost", {
-	title: "Ugur Kodak | New Post"
+    models.topic.find((err, topics) => {
+	if (err) {
+	    console.log(err);
+	    res.end(err);
+	} else {
+	    res.render("newpost", {
+		title: "Ugur Kodak | New Post",
+		topics: topics
+	    });
+	}
     });
+    
 }
 
 module.exports.createNewPost = (req, res) => {
@@ -65,6 +84,18 @@ module.exports.createNewPost = (req, res) => {
 		content: req.body.postContent
 	    }
 	}), (err, topic) => {
+	    if (err) {
+		console.log(err);
+		res.end(err);
+	    } else {	
+		res.redirect("/");
+	    }
+	});
+    } else {
+	models.topic.findByIdAndUpdate(req.body.selectTopic, { $push: { posts: {
+	    title: req.body.postTitle,
+	    content: req.body.postContent
+	}}} ,(err, topic) => {
 	    if (err) {
 		console.log(err);
 		res.end(err);

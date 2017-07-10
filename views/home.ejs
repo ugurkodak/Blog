@@ -15,12 +15,12 @@
 	    <h2><%= topics[i].posts[0].title %></h2>
 	    <p><%= topics[i].posts[0].content %></p>
 	    <h3>Older posts about this topic:</h3>
-	    <div class="btn-group-vertical">
+	    <div class="btn-group-vertical" style="margin-bottom: 2px;">
 		<% for (let j = 1; j < topics[i].posts.length; j++) { %>
-		    <button class="btn-old-post btn btn-default" type="button" data-toggle="collapse" data-target="#qwe"><%= topics[i].posts[j].title %></button>
-		    <div id="qwe" class="post collapse">
+		    <button class="btn-old-post btn btn-default" type="button" data-toggle="collapse" data-target=<%= "#" + topics[i].posts[j]._id %>><%= topics[i].posts[j].title %></button>
+		    <div id=<%= topics[i].posts[j]._id %> class="post collapse">
 			<h2><%= topics[i].posts[j].title %></h2>
-			<p>topics[i].posts[j].content</p>
+			<p><%= topics[i].posts[j].content %></p>
 		    </div>
 		<% } %>
 	    </div>

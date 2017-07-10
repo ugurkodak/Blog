@@ -8,10 +8,11 @@
 	    </div>
 	    <div class="form-group col-xs-4">
 		<label class="sr-only" for="selectTopic">Topic</label>
-		<select class="form-control" id="selectTopic" name="selectTopic">
+		<select class="form-control" id="selectTopic" name="selectTopic" onchange="toggleTopicInput()">
 		    <option value="new" selected>New Topic</option>
-		    <option>Other Option Has a Very Long Title</option>
-		    <option>Other option</option>
+		    <% for (let i = 0; i < topics.length; i++) { %>
+			<option value=<%= topics[i]._id %>><%= topics[i].title %></option>
+		    <% } %>
 		</select>
 	    </div>
 	    <div class="form-group col-xs-8" style="padding-left: 0px;">
