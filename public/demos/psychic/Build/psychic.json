@@ -1,0 +1,9 @@
+{
+"TOTAL_MEMORY": 268435456,
+"dataUrl": "psychic.data.unityweb",
+"asmCodeUrl": "psychic.asm.code.unityweb",
+"asmMemoryUrl": "psychic.asm.memory.unityweb",
+"asmFrameworkUrl": "psychic.asm.framework.unityweb",
+"splashScreenStyle": "Dark",
+"backgroundColor": "#231F20"
+}

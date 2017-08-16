@@ -28,4 +28,10 @@ router.get("/demo", (req, res, next) => {
     });
 });
 
+router.get("/psychic", (req, res, next) => {
+    res.render("demos/psychic", {
+	title: "Ugur Kodak | Psychic"
+    });
+});
+
 module.exports = router;
