@@ -9,7 +9,7 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-8">
+    <div class="col-xs-10" id="content">
 	<% for (let i = 0; i < topics.length; i++) { %>
 	    <h1><%= topics[i].title %></h1>
 	    <h2><%= topics[i].posts[0].title %></h2>
@@ -28,10 +28,11 @@
 	<% } %>
     </div>
     
-    <div class="col-xs-4">
-	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris bibendum at est ut accumsan. Donec lacus eros, euismod in vulputate et, efficitur in velit. Suspendisse sit amet mollis tortor, eu interdum purus. Duis ut turpis libero. Donec ac accumsan est. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean condimentum ac purus eu congue. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce pellentesque mi non neque interdum, sit amet vulputate orci rhoncus. Nullam non blandit leo, a aliquet risus. Nullam diam risus, luctus vel euismod non, tempus et urna. Cras in ultrices orci. Aliquam leo nisl, fringilla in finibus nec, sollicitudin vel tortor. Nam nec libero sapien. Morbi pulvinar congue sapien, tincidunt facilisis tellus scelerisque sed. Cras facilisis ex sem, a efficitur ligula ultrices quis.
-
-	Vestibulum erat mi, semper sed quam dapibus, accumsan interdum lacus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris aliquet et velit posuere tempor. Nam id diam est. Nullam mattis massa vitae risus dapibus, et dictum odio imperdiet. Duis nec dui in dolor fringilla lacinia. Proin venenatis, est et malesuada sodales, elit mi tincidunt purus, ac mattis ligula purus laoreet ligula. In nibh est, egestas a eros id, malesuada commodo lorem. Donec ut finibus tortor, a varius lorem. Sed quis ante at metus finibus cursus ac at orci. Proin cursus turpis a tellus condimentum dapibus. Morbi nec facilisis velit. Maecenas venenatis ex rutrum nunc condimentum dapibus in eu nunc.
+    <div class="col-xs-2">
+	<h1>All Topics</h1>
+	<% for (let i = 0; i < topics.length; i++) { %>
+	    <h3><%= topics[i].title %></h3>
+	<% } %>
     </div>
 </div>
 

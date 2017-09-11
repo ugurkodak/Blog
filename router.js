@@ -16,6 +16,10 @@ router.get("/logout", (req, res, next) => {
     res.redirect("/");
 });
 
+router.get("/posts", controller.requireAuth, (req, res, next) => {
+    controller.displayPosts(req, res);
+})
+
 router.get("/newpost", controller.requireAuth, (req, res, next) => {
     controller.displayNewPost(req, res);
 }).post("/newpost", controller.requireAuth, (req, res, next) => {

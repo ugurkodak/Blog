@@ -26,7 +26,7 @@ passport.use(models.user.createStrategy());
 passport.serializeUser(models.user.serializeUser());
 passport.deserializeUser(models.user.deserializeUser());
 
-//models.user.register(new models.user({username: "funky"}), "7896qwed", function(err){if (err){console.log(err);}});
+
 
 server.listen(port, function() {
     console.log("Node app is running on port " + port);

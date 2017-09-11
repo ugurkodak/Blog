@@ -33,7 +33,7 @@ module.exports.displayLogin = (req, res) => {
 	});
     }
     else {
-	return res.redirect("/");
+	return res.redirect("/posts");
     }
 }
 
@@ -49,7 +49,7 @@ module.exports.processLogin = (req, res, next) => {
 	    if (err) {
 		return next(err);
 	    }
-	    return res.redirect(req.session.redirect ? req.session.redirect : "/");
+	    return res.redirect(req.session.redirect ? req.session.redirect : "/posts");
 	});
     })(req, res, next);
 }
@@ -57,6 +57,20 @@ module.exports.processLogin = (req, res, next) => {
 module.exports.processLogout = (req, res) => {
     req.logout();
     res.redirect('/');
+}
+
+module.exports.displayPosts = (req, res) => {
+    models.topic.find((err, topics) => {
+	if (err) {
+	    console.log(err);
+	    res.end(err);
+	} else {
+	    res.render("posts", {
+		title: "Ugur Kodak | Posts",
+		topics: topics
+	    });
+	}
+    });
 }
 
 module.exports.displayNewPost = (req, res) => {
@@ -71,7 +85,6 @@ module.exports.displayNewPost = (req, res) => {
 	    });
 	}
     });
-    
 }
 
 module.exports.createNewPost = (req, res) => {
