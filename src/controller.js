@@ -2,7 +2,7 @@ let mongoose = require("mongoose");
 let passport = require("passport");
 let models = require("./models");
 
-module.exports.displayHome = (req, res) => {
+module.exports.displayBlog = (req, res) => {
     models.topic.find((err, topics) => {
 	if (err) {
 	    console.log(err);
@@ -18,8 +18,8 @@ module.exports.displayHome = (req, res) => {
 	    topics.sort((a, b) => {
 		return b.posts[0].date - a.posts[0].date;
 	    });
-	    res.render("home", {
-		title: "Ugur Kodak | Home",
+	    res.render("blog", {
+		title: "Ugur Kodak | Blog",
 		topics: topics
 	    });
 	}

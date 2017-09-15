@@ -7,10 +7,12 @@ let bodyParser = require("body-parser");
 let router = require("./src/router");
 let models = require("./src/models");
 
-server.set("views", "./src/views");
+server.set("views", __dirname + "/src/views");
 server.set("view engine", "ejs");
 
-server.use(express.static("./src/public"));
+server.use(express.static(__dirname + "/src/public", {
+    redirect: false
+}));
 server.use(session({
     secret: "secret",
     resave: true,

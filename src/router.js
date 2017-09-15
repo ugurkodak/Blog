@@ -1,8 +1,14 @@
 let router = require("express").Router();
 let controller = require("./controller");
 
+router.get("/blog", (req, res, next) => {
+    controller.displayBlog(req, res);
+});
+
 router.get("/", (req, res, next) => {
-    controller.displayHome(req, res);
+    res.render("index", {
+	title: "Ugur Kodak"
+    });
 });
 
 router.get("/login", (req, res, next) => {
@@ -26,21 +32,15 @@ router.get("/newpost", controller.requireAuth, (req, res, next) => {
     controller.createNewPost(req, res);
 });
 
-router.get("/demo", (req, res, next) => {
-    res.render("demos/space", {
+router.get("/space", (req, res, next) => {
+    res.render("unity3d/space", {
 	title: "Ugur Kodak | Space Invaders"
     });
 });
 
 router.get("/psychic", (req, res, next) => {
-    res.render("demos/psychic", {
+    res.render("unity3d/psychic", {
 	title: "Ugur Kodak | Psychic"
-    });
-});
-
-router.get("/three", (req, res, next) => {
-    res.render("demos/three", {
-	title: "Ugur Kodak | Three"
     });
 });
 
