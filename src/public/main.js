@@ -1,3 +1,5 @@
+require("bootstrap");
+
 //newtopic.ejs
 function toggleTopicInput() {
     if ($("#selectTopic").val() == "new") {

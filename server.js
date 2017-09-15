@@ -4,13 +4,13 @@ let server = express();
 let session = require('express-session');
 let passport = require("passport");
 let bodyParser = require("body-parser");
-let router = require("./router");
-let models = require("./models");
+let router = require("./src/router");
+let models = require("./src/models");
 
-server.set("views", "./views");
+server.set("views", "./src/views");
 server.set("view engine", "ejs");
 
-server.use(express.static("./public"));
+server.use(express.static("./src/public"));
 server.use(session({
     secret: "secret",
     resave: true,
@@ -25,8 +25,6 @@ server.use(router);
 passport.use(models.user.createStrategy());
 passport.serializeUser(models.user.serializeUser());
 passport.deserializeUser(models.user.deserializeUser());
-
-
 
 server.listen(port, function() {
     console.log("Node app is running on port " + port);
