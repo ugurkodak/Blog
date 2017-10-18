@@ -1,7 +1,7 @@
 //var THREE = require("three");
 //var Detector = require("./Detector");
 
-//TODO: Navigation links
+//Navigation links
 // code.onmouseover = function() {
 //     console.log("demo");
 // }
@@ -16,28 +16,10 @@
 // }
 
 if (Detector.webgl) {
-    //Mouse input
-    var mouseX = 0;
-    var mouseY = 0;
-    var mouseDown = false;
-    var clickPosition = new THREE.Vector2();
-    document.onmousemove = function (e) {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-    }
-    document.onmousedown = function (e) {
-        mouseDown = true;
-        clickPosition.setX(mouseX);
-        clickPosition.setY(mouseY);
-    }
-    document.onmouseup = function (e) {
-        mouseDown = false;
-    }
-
     //Setup scene
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 10;
+    camera.position.setZ(10);
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
@@ -48,6 +30,23 @@ if (Detector.webgl) {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    //Mouse input
+    var mouseDown = false;
+    var clickPosition = new THREE.Vector3();
+    document.onmousemove = function (e) {
+        clickPosition.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0);
+        clickPosition.unproject(camera);
+        var dir = clickPosition.sub(camera.position).normalize();
+        var distance = -camera.position.z / dir.z;
+        clickPosition = camera.position.clone().add(dir.multiplyScalar(distance));
+    }
+    document.onmousedown = function (e) {
+        mouseDown = true;
+    }
+    document.onmouseup = function (e) {
+        mouseDown = false;
     }
 
     //Add stars
@@ -67,23 +66,23 @@ if (Detector.webgl) {
     scene.add(starField);
 
     //Glowing objects
+    const particleCount = 100;
     var glowingObject = new THREE.Object3D();
     var glowTexture = new THREE.TextureLoader().load("home/glow.png");
     var glowMaterial = new THREE.SpriteMaterial({
         map: glowTexture, 
         color: 0xff00ff
     });
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < particleCount; i++) {
         var glowParticle = new THREE.Sprite(glowMaterial);
-        //glowParticle.position.x = THREE.Math.randFloatSpread(1);
-        //glowParticle.position.y = THREE.Math.randFloatSpread(1);
-        //glowParticle.position.z = THREE.Math.randFloatSpread(1);
-        //glowParticle.scale.set(0.2, 0.2, 1)
+        glowParticle.position.x = THREE.Math.randFloatSpread(0.5);
+        glowParticle.position.y = THREE.Math.randFloatSpread(0.5);
+        glowParticle.position.z = THREE.Math.randFloatSpread(0.5);
+        glowParticle.scale.set(0.5, 0.5, 1)
         glowingObject.add(glowParticle);
     }    
-    glowingObject.position.z = -100;
+    glowingObject.position.setZ(0); //-1000
     scene.add(glowingObject);
-
     animate();
 } else {
     //WebGL not available
@@ -102,24 +101,17 @@ function animate() {
 
     //Animate glowing object
     for (var i = 0; i < glowingObject.children.length; i++) {
-        particlePosition = glowingObject.children[i].position;
-       // if (mouseDown) {
-            //var signedRandomMultiplierX = ;
-            var signedRandomMultiplierY = Math.random() < 0.5 ? -1 : 1;
-            var signedRandomMultiplierX = Math.random() < 0.5 ? -1 : 1;
-            particlePosition.x += (Math.random() < 0.5 ? -1 : 1) * 0.01;
-            particlePosition.y += (Math.random() < 0.5 ? -1 : 1) * 0.01;
-            particlePosition.z += (Math.random() < 0.5 ? -1 : 1) * 0.01;
-            //THREE.Math.clamp(glowingObject.children[i].position.x, 0, 0.5);
-            //console.log(particlePosition);            
-            
-            
-            //glowingObject.children[i].position.x = THREE.Math.clamp(mouseX - glowingObject.children[i].position.x);
-            //glowingObject.children[i].position.y = THREE.Math.clamp(mouseY - glowingObject.children[i].position.x);
-            //glowingObject.children[i].position.z += signedRandom * Math.random * 0.001;            
-       // }
+        var particlePosition = glowingObject.children[i].position;
+        if (mouseDown) {
+            particlePosition.x += (clickPosition.x - particlePosition.x) * 0.01;
+            particlePosition.y += (clickPosition.y - particlePosition.y) * 0.01;
+        }
+        particlePosition.x += (Math.random() < 0.5 ? -1 : 1) * 0.01;
+        particlePosition.y += (Math.random() < 0.5 ? -1 : 1) * 0.01;
+        particlePosition.z += (Math.random() < 0.5 ? -1 : 1) * 0.01;
     }
-    if (glowingObject.position.z < 0)
-    glowingObject.position.z += Math.abs(glowingObject.position.z) * 0.01;
-    //glowingObject.rotation.x += 0.01;
+    if (glowingObject.position.z < -1)
+    glowingObject.position.z += Math.abs(glowingObject.position.z) * 0.06;
+
+    //console.log(clickPosition);
 }
