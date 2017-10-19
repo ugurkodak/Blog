@@ -34,13 +34,13 @@ if (Detector.webgl) {
 
     //Mouse input
     var mouseDown = false;
-    var clickPosition = new THREE.Vector3();
+    var mousePosition = new THREE.Vector3();
     document.onmousemove = function (e) {
-        clickPosition.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0);
-        clickPosition.unproject(camera);
-        var dir = clickPosition.sub(camera.position).normalize();
+        mousePosition.set((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1, 0);
+        mousePosition.unproject(camera);
+        var dir = mousePosition.sub(camera.position).normalize();
         var distance = -camera.position.z / dir.z;
-        clickPosition = camera.position.clone().add(dir.multiplyScalar(distance));
+        mousePosition = camera.position.clone().add(dir.multiplyScalar(distance));
     }
     document.onmousedown = function (e) {
         mouseDown = true;
@@ -48,6 +48,9 @@ if (Detector.webgl) {
     document.onmouseup = function (e) {
         mouseDown = false;
     }
+
+    //Clock
+    var clock = new THREE.Clock();
 
     //Add stars
     var starsGeometry = new THREE.Geometry();
@@ -65,24 +68,32 @@ if (Detector.webgl) {
     starField.position.z = -1000;
     scene.add(starField);
 
-    //Glowing objects
-    const particleCount = 100;
+    //Glowing object
     var glowingObject = new THREE.Object3D();
     var glowTexture = new THREE.TextureLoader().load("home/glow.png");
     var glowMaterial = new THREE.SpriteMaterial({
-        map: glowTexture, 
+        map: glowTexture,
         color: 0xff00ff
     });
+    const particleCount = 200;
+    var particleScale = 0.5;
+    const particleSpeed = 0.01;
     for (var i = 0; i < particleCount; i++) {
         var glowParticle = new THREE.Sprite(glowMaterial);
-        glowParticle.position.x = THREE.Math.randFloatSpread(0.5);
-        glowParticle.position.y = THREE.Math.randFloatSpread(0.5);
-        glowParticle.position.z = THREE.Math.randFloatSpread(0.5);
-        glowParticle.scale.set(0.5, 0.5, 1)
+        glowParticle.position.x = THREE.Math.randFloatSpread(particleScale + 0.5);
+        glowParticle.position.y = THREE.Math.randFloatSpread(particleScale + 0.5);
+        glowParticle.position.z = THREE.Math.randFloatSpread(particleScale + 0.5);
+        glowParticle.scale.set(particleScale, particleScale, 1);
+        glowParticle.userData = {
+            velocity: new THREE.Vector3(
+            (Math.random() < 0.5 ? -1 : 1) * Math.random() * 0.01,
+            (Math.random() < 0.5 ? -1 : 1) * Math.random() * 0.01,
+            (Math.random() < 0.5 ? -1 : 1) * Math.random() * 0.01
+        )};
         glowingObject.add(glowParticle);
-    }    
-    glowingObject.position.setZ(0); //-1000
+    }
     scene.add(glowingObject);
+
     animate();
 } else {
     //WebGL not available
@@ -90,9 +101,17 @@ if (Detector.webgl) {
     document.body.appendChild(warning);
 }
 
+//TEMP: DEBUG
+const axisX = new THREE.Vector3(1, 0, 0);
+const axisY = new THREE.Vector3(0, 1, 0);
+const axisZ = new THREE.Vector3(0, 0, 1);
+var whoooop = true;
+
 function animate() {
     //Loop and render
-    requestAnimationFrame(animate);
+    //setTimeout(function() {
+        requestAnimationFrame(animate);
+    //}, 1000 / 60);
     renderer.render(scene, camera);
 
     //Animate stars
@@ -101,17 +120,28 @@ function animate() {
 
     //Animate glowing object
     for (var i = 0; i < glowingObject.children.length; i++) {
-        var particlePosition = glowingObject.children[i].position;
-        if (mouseDown) {
-            particlePosition.x += (clickPosition.x - particlePosition.x) * 0.01;
-            particlePosition.y += (clickPosition.y - particlePosition.y) * 0.01;
-        }
-        particlePosition.x += (Math.random() < 0.5 ? -1 : 1) * 0.01;
-        particlePosition.y += (Math.random() < 0.5 ? -1 : 1) * 0.01;
-        particlePosition.z += (Math.random() < 0.5 ? -1 : 1) * 0.01;
+        var particle = glowingObject.children[i];
+        particle.position.add(particle.userData.velocity);
     }
-    if (glowingObject.position.z < -1)
-    glowingObject.position.z += Math.abs(glowingObject.position.z) * 0.06;
 
-    //console.log(clickPosition);
+    //TEMP: FUN TIME
+    if (mouseDown && whoooop) {
+        var zeroVector = new THREE.Vector3();
+        for (var i = 0; i < glowingObject.children.length; i++) {
+            var particle = glowingObject.children[i];
+            particle.userData.velocity.add(particle.userData.velocity.multiplyScalar(-1));
+
+            if (particle.userData.velocity.distanceTo(zeroVector) > 0.1) {
+                particle.position.set(0, 0, 0);
+                particle.userData.velocity.set(
+                    (Math.random() < 0.5 ? -1 : 1) * Math.random() * 0.01,
+                    (Math.random() < 0.5 ? -1 : 1) * Math.random() * 0.01,
+                    (Math.random() < 0.5 ? -1 : 1) * Math.random() * 0.01
+                );
+            }
+        }
+        whoooop = false;
+    }
+    if (!mouseDown)
+        whoooop = true;
 }
