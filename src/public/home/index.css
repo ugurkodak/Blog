@@ -1,6 +1,7 @@
 body {
     margin: auto;
     background-color: black;
+    color: #a0a0a0;
 }
 
 canvas {
@@ -9,13 +10,15 @@ canvas {
     border: none;
 }
 
-#links {
+#content {
     position: fixed;
     top: 15px;
     width: 100%;
     text-align: center;
     z-index: 1;
     display:block;
+    height: 100%;
+    overflow-y: auto;
 }
 
 @keyframes flicker {
@@ -25,7 +28,7 @@ canvas {
     12% {opacity: 0.8}
 }
 
-#links a {
+#content a {
     /* position: relative; */
     color: white;
     text-decoration: none;
@@ -35,11 +38,29 @@ canvas {
     line-height: 100px;
 }
 
-#links a:hover {
+#content a:hover {
     transform: none;
     opacity: 1;
     animation: none;
 }
+
+/* .lock:hover .icon-unlock:before {
+    content: "\f023";
+} */
+
+#volume
+{
+    text-align: left;
+    font-size: 24px;
+    user-select: none;
+}
+#volume:hover {
+    color: white;
+}
+#volumeOn {
+    display: none;
+}
+
 
 #code {
     font-size: 38px;
@@ -51,6 +72,7 @@ canvas {
     animation-delay: 3s;
     animation-duration: 27s;
     animation-iteration-count: infinite;
+    user-select: none;
 }
 
 /* disabled*/
@@ -65,6 +87,7 @@ canvas {
     animation-iteration-count: infinite; */
     pointer-events: none;
     opacity: 0.2 !important;
+    user-select: none;
 }
 
 #linkedin {
@@ -76,6 +99,7 @@ canvas {
     animation-delay: 21s;
     animation-duration: 27s;
     animation-iteration-count: infinite;
+    user-select: none;
 }
 
 #email {
@@ -87,4 +111,14 @@ canvas {
     animation-delay: 15s;
     animation-duration: 27s;
     animation-iteration-count: infinite;
+    user-select: none;
+}
+
+#welcome {
+    margin-top: 100px;
+    user-select: none;    
+}
+
+.welcome-message {
+    text-align: left;
 }

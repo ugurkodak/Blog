@@ -15,6 +15,24 @@
 //     console.log("email");
 // }
 
+var ambient = new Audio("home/ambient.ogg");
+
+let muted = true;
+volume.onclick = function() {
+    if (muted) {
+        muted = false;
+        volumeOn.style.display = "inline";
+        volumeOff.style.display = "none";
+        ambient.play();
+    }
+    else {
+        muted = true;
+        volumeOn.style.display = "none";
+        volumeOff.style.display = "inline";
+        ambient.pause();
+    }
+}
+
 if (Detector.webgl) {
     //Setup scene
     var scene = new THREE.Scene();
@@ -96,9 +114,8 @@ if (Detector.webgl) {
 
     animate();
 } else {
-    //WebGL not available
-    var warning = Detector.getWebGLErrorMessage();
-    document.body.appendChild(warning);
+    // var warning = Detector.getWebGLErrorMessage();
+    // document.body.appendChild(warning);
 }
 
 //TEMP: DEBUG
