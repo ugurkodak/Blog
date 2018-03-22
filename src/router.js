@@ -44,4 +44,10 @@ router.get("/psychic", (req, res, next) => {
     });
 });
 
+router.get("/cubes", (req, res, next) => {
+    res.render("unity3d/cubes", {
+	title: "Ugur Kodak | Cubes"
+    });
+});
+
 module.exports = router;
