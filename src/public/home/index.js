@@ -94,7 +94,7 @@ if (Detector.webgl) {
         color: 0xff00ff
     });
     const particleCount = 200;
-    var particleScale = 0.5;
+    var particleScale = 0.1;
     const particleSpeed = 0.01;
     for (var i = 0; i < particleCount; i++) {
         var glowParticle = new THREE.Sprite(glowMaterial);

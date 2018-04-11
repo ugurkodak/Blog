@@ -9,7 +9,7 @@ body
     color: #aaa;
     font-size: 16px;
     margin-top: 15px;
-//    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 canvas
