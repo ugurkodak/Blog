@@ -1,12 +1,34 @@
-let mongoose = require("mongoose");
-let passport = require("passport");
-let models = require("./models");
+let mongoose = require('mongoose');
+let passport = require('passport');
+let models = require('./models');
+let geoip = require('geoip-lite');
+let weather = require('weather-js');
 
 module.exports.displayHome = (req, res) => {
-	return res.render("home", { 
-		title: "Ugur Kodak",
-		ip: req.connection.remoteAddress
-	});
+	let message = 'How about this weather?';
+	//let ip = '142.116.117.123';
+	let ip = req.ip;
+	//let ip = '::ffff:10.153.172.52';
+	//let ip = '10.153.172.52';
+	let locationInfo = geoip.lookup(ip);
+	if (locationInfo) {
+		weather.find({ search: JSON.stringify(locationInfo.city) }, (err, result) => {
+			let skytext = result[0].current.skytext;
+			if (skytext == "Partly Sunny")
+				message = 'We couldn\'t ask for a nicer day, could we?';
+			return res.render('home', {
+				title: 'Ugur Kodak',
+				message: message
+			});
+		});
+	}
+	else {
+		console.error('Couldn\'t get location info. Default message sent.')
+		return res.render('home', {
+			title: 'Ugur Kodak',
+			message: message
+		})
+	}
 }
 
 // module.exports.displayBlog = (req, res) => {

@@ -36,6 +36,6 @@ body
             div(class='align-self-start mt-2')
                 h1(id='typewriter' style='--steps: 6; --duration: 0.5s; --delay: 0s;') Hello!
             div(class='align-self-start mt-0 pt0')
-                h1(id='typewriter' style='--steps: 41; --duration: 2s; --delay: 2s;') Welcome to the jungle. asd asdas
-            #{ip}
+                - var steps = '--steps:' + message.length + ';';
+                h1(id='typewriter' style=steps + ' --duration: 2s; --delay: 2s;') #{message}
             include footer.pug
