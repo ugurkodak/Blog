@@ -1,0 +1,41 @@
+include header.pug
+style(type='text/css').
+    #typewriter {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    color: #6af;
+    user-select: none;
+    width: 0;
+    overflow: hidden; /* Ensures the content is not revealed until the animation */
+    border-right: 1px solid transparent; /* The typwriter cursor */
+    white-space: nowrap; /* Keeps the content on a single line */
+    //margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+    animation: 
+        typing var(--duration) steps(var(--steps), end) var(--delay) forwards,
+        blink-caret 1s step-end var(--duration),
+        flicker 4s ease 3s 1 forwards;
+    }
+    @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+    }
+    @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white; }
+    }
+    @keyframes flicker {
+    5% { opacity: 0.5 }
+    10% { opacity: 1 }
+    20% { opacity: 0.2 }
+    50% { opacity: 1}
+    100% {white-space: normal }
+    }
+body
+    div(class='container-fluid')
+        div(class='d-flex flex-column no-gutters')
+            div(class='align-self-start mt-2')
+                h1(id='typewriter' style='--steps: 6; --duration: 0.5s; --delay: 0s;') Hello!
+            div(class='align-self-start mt-0 pt0')
+                h1(id='typewriter' style='--steps: 41; --duration: 2s; --delay: 2s;') Welcome to the jungle. asd asdas
+            #{ip}
+            include footer.pug

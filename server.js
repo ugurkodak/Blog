@@ -8,9 +8,8 @@ let router = require("./src/router");
 let models = require("./src/models");
 
 server.set("views", __dirname + "/src/views");
-server.set("view engine", "ejs");
-
-server.use(express.static(__dirname + "/src/public", {
+server.set("view engine", "pug");
+server.use(express.static(__dirname + "/src/static", {
     redirect: false
 }));
 server.use(session({
