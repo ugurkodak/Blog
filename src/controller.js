@@ -3,19 +3,77 @@ let passport = require('passport');
 let models = require('./models');
 let geoip = require('geoip-lite');
 let weather = require('weather-js');
+var ipaddr = require('ipaddr.js');
+
 
 module.exports.displayHome = (req, res) => {
 	let message = 'How about this weather?';
-	//let ip = '142.116.117.123';
-	let ip = req.ip;
+
+	// let ip = '::ffff:10.153.172.52';
+	// console.log(ipaddr.parse(ip).toString());
+	// console.log(ipaddr.process(ip).toString());
+	// 
+	
+	// let locationInfo;
+	// if (ipaddr.parse(req.ip).kind == 'ipv4') 
+	// 	locationInfo = geoip.lookup(ipaddr);
+	// else
+	
+	// //let ip = '142.116.117.123';
+	// let ip = req.ip.split(":").pop();
+	// console.log(ip);
+	// //let ip = '::ffff:10.153.172.52';
 	//let ip = '::ffff:10.153.172.52';
-	//let ip = '10.153.172.52';
-	let locationInfo = geoip.lookup(ip);
+	
+	let ip = '45.5.116.0';
+	//let ip = '142.116.117.123';
+	let locationInfo = geoip.lookup(ipaddr.process(ip).toString());
 	if (locationInfo) {
 		weather.find({ search: JSON.stringify(locationInfo.city) }, (err, result) => {
-			let skytext = result[0].current.skytext;
-			if (skytext == "Partly Sunny")
-				message = 'We couldn\'t ask for a nicer day, could we?';
+			if (result[0]) {
+				let skycode = result[0].current.skycode;
+				console.log(JSON.stringify(locationInfo.city));
+				console.log(skycode);
+				console.log(result[0].current.skytext);
+				switch (skycode) {
+					case '0':
+					case '1':
+					case '2':
+					case '3':
+					case '4':
+					case '17':
+					case '35':
+						message = 'I hear they\'re calling for thunderstorms';
+						break;
+					case '9':
+					case '11':
+					case '12':
+					case '40':
+						message = 'What a glorious feeling, I\'m happy again';
+						break;
+					case '27':
+					case '28':
+					case '29':
+					case '30':
+					case '31':
+					case '32':
+					case '33':
+					case '34':
+						message = 'We couldn\'t ask for a nicer weather, could we?';
+						break;
+					case '14':
+					case '15':
+					case '16':
+					case '42':
+					case '43':
+					case '13':
+						message = 'Santa Claus is coming to town.'
+						break;
+					default:
+						break;
+				}
+
+			}
 			return res.render('home', {
 				title: 'Ugur Kodak',
 				message: message
@@ -23,7 +81,7 @@ module.exports.displayHome = (req, res) => {
 		});
 	}
 	else {
-		console.error('Couldn\'t get location info. Default message sent.')
+		console.error('Couldn\'t get location info from IP: ' + req.ip + '. Default message sent.');
 		return res.render('home', {
 			title: 'Ugur Kodak',
 			message: message
