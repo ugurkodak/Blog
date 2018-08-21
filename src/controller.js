@@ -3,13 +3,18 @@ let passport = require('passport');
 let models = require('./models');
 let geoip = require('geoip-lite');
 let weather = require('weather-js');
-var ipaddr = require('ipaddr.js');
+let ipaddr = require('ipaddr.js');
 
 module.exports.displayHome = (req, res) => {
 	let message = 'How about this weather?';
-	let locationInfo = geoip.lookup(ipaddr.process(req.ip).toString());
-	if (locationInfo) {
-		weather.find({ search: JSON.stringify(locationInfo.city) }, (err, result) => {
+	let ip = req.ip;
+	if (ipaddr.process(ip).kind() == 'ipv4')
+		ip = ipaddr.process(ip).toString();
+	else
+		ip = ipaddr.parse(ip).toString();
+	let locationData = geoip.lookup(ip);
+	if (locationData && locationData.city) {
+		weather.find({ search: JSON.stringify(locationData.city) }, (err, result) => {
 			if (result[0]) {
 				let skycode = result[0].current.skycode;
 				switch (skycode) {
@@ -57,7 +62,7 @@ module.exports.displayHome = (req, res) => {
 		});
 	}
 	else {
-		console.error('Couldn\'t get location info from IP: ' + req.ip + '. Default message sent.');
+		console.error('Couldn\'t get city info from IP: "' + ip + '". Default message sent.');
 		return res.render('home', {
 			title: 'Ugur Kodak',
 			message: message
