@@ -5,36 +5,13 @@ let geoip = require('geoip-lite');
 let weather = require('weather-js');
 var ipaddr = require('ipaddr.js');
 
-
 module.exports.displayHome = (req, res) => {
 	let message = 'How about this weather?';
-
-	// let ip = '::ffff:10.153.172.52';
-	// console.log(ipaddr.parse(ip).toString());
-	// console.log(ipaddr.process(ip).toString());
-	// 
-	
-	// let locationInfo;
-	// if (ipaddr.parse(req.ip).kind == 'ipv4') 
-	// 	locationInfo = geoip.lookup(ipaddr);
-	// else
-	
-	// //let ip = '142.116.117.123';
-	// let ip = req.ip.split(":").pop();
-	// console.log(ip);
-	// //let ip = '::ffff:10.153.172.52';
-	//let ip = '::ffff:10.153.172.52';
-	
-	let ip = '45.5.116.0';
-	//let ip = '142.116.117.123';
-	let locationInfo = geoip.lookup(ipaddr.process(ip).toString());
+	let locationInfo = geoip.lookup(ipaddr.process(req.ip).toString());
 	if (locationInfo) {
 		weather.find({ search: JSON.stringify(locationInfo.city) }, (err, result) => {
 			if (result[0]) {
 				let skycode = result[0].current.skycode;
-				console.log(JSON.stringify(locationInfo.city));
-				console.log(skycode);
-				console.log(result[0].current.skytext);
 				switch (skycode) {
 					case '0':
 					case '1':
@@ -72,7 +49,6 @@ module.exports.displayHome = (req, res) => {
 					default:
 						break;
 				}
-
 			}
 			return res.render('home', {
 				title: 'Ugur Kodak',
