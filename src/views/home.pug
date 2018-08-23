@@ -9,10 +9,11 @@ style(type='text/css').
     }
 
     .nav-link {
-        color: #f44;
+        color: #b33;
+        user-select: none;
     }
     .nav-link:hover {
-        color: #fb4;
+        color: #f44;
         font-family: 'Courier New', Courier, monospace;
     }
 
@@ -33,6 +34,10 @@ style(type='text/css').
     .dropdown-menu {
         background-color: #000;
         border-radius: 0;
+        overflow: scroll;
+        overflow-x: hidden;
+        //overflow-y: hidden;
+        max-height: 300px;
         //border:dashed white 1px;
         //- border-radius: 60px; Note: This looks great but doesn't fit the theme
     }
@@ -42,9 +47,11 @@ style(type='text/css').
         font-family: 'Courier New', Courier, monospace;
         color: #aaa;
         background-color: transparent;
+        white-space: normal;
     }
 
-    .dropdown-item:hover {
+    .dropdown-item:hover,
+    .dropdown-item:focus {
         color: #fff;
         background-color: transparent;
     }
@@ -95,11 +102,13 @@ body
                 div(class='mono-font' style='font-size: 14') 2018 August 22                
                 div(class='d-flex flex-row' style='flex-wrap: wrap;')
                     h1(class='mono-font') Post Title
+                    //- TODO: Hide the scrollbars on the dropdown menu. Make it scrollable
+                    //- and add buttons for scrolling with clicks.
                     div(class='dropdown mb-3')
-                        a(class="dropdown-toggle mono-font" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") #Topic Title
+                        a(class="dropdown-toggle mono-font" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Topic Title #4
                         div(class="dropdown-menu" aria-labelledby="dropdownMenuLink")
-                            a(class="dropdown-item" href="#") Previous post
-                            a(class="dropdown-item" href="#") Older Post
-                            a(class="dropdown-item" href="#") Oldest Post Has a Very Long Title
-                p() Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus, turpis in laoreet pellentesque, massa justo vulputate urna, ac vulputate mi mauris vitae nibh. Duis feugiat nisi sed risus vestibulum faucibus. Nulla semper mi nisl, ac gravida diam blandit eget. Duis pretium vestibulum odio, eu bibendum mi pharetra sed. Duis laoreet venenatis sagittis. Quisque tincidunt nunc lorem, ac rutrum massa vulputate at. Nam tempus scelerisque maximus. Suspendisse eu scelerisque velit, facilisis blandit risus. Nunc tristique erat massa. Duis ultricies, elit eu eleifend imperdiet, augue lorem ultricies purus, quis egestas dui felis et tellus. Morbi feugiat condimentum interdum. Nam et arcu et urna mollis aliquet. Ut tempor ultricies augue, faucibus elementum libero laoreet eget. Suspendisse vestibulum augue nunc, sit amet lacinia lectus vulputate ut. Cras dapibus, tellus at suscipit accumsan, ante nisl luctus eros, a sodales dui leo ac lorem. Nullam non accumsan elit.
+                            a(class="dropdown-item" href="#") #3 Previous post
+                            a(class="dropdown-item" href="#") #2 Older Post
+                            a(class="dropdown-item" href="#") #1 Oldest Post Has a Very Long Title
+                p(style='max-height:100px; overflow: hidden;') Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus, turpis in laoreet pellentesque, massa justo vulputate urna, ac vulputate mi mauris vitae nibh. Duis feugiat nisi sed risus vestibulum faucibus. Nulla semper mi nisl, ac gravida diam blandit eget. Duis pretium vestibulum odio, eu bibendum mi pharetra sed. Duis laoreet venenatis sagittis. Quisque tincidunt nunc lorem, ac rutrum massa vulputate at. Nam tempus scelerisque maximus. Suspendisse eu scelerisque velit, facilisis blandit risus. Nunc tristique erat massa. Duis ultricies, elit eu eleifend imperdiet, augue lorem ultricies purus, quis egestas dui felis et tellus. Morbi feugiat condimentum interdum. Nam et arcu et urna mollis aliquet. Ut tempor ultricies augue, faucibus elementum libero laoreet eget. Suspendisse vestibulum augue nunc, sit amet lacinia lectus vulputate ut. Cras dapibus, tellus at suscipit accumsan, ante nisl luctus eros, a sodales dui leo ac lorem. Nullam non accumsan elit.
             include footer.pug
