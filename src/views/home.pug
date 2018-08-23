@@ -1,6 +1,55 @@
 include header.pug
 style(type='text/css').
-    #typewriter {
+    .debug-border {
+        border: solid white 1px;
+    }
+
+    .mono-font {
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .nav-link {
+        color: #f44;
+    }
+    .nav-link:hover {
+        color: #fb4;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .dropdown-toggle {
+        font-size: 14px;
+        color: #aaa;
+        background-color: #000;
+        border: none;
+    }
+    .dropdown-toggle:hover {
+        font-size: 14px;
+        color: #fff;
+        background-color: #000;
+        border: none;
+        text-decoration: none;
+    }
+
+    .dropdown-menu {
+        background-color: #000;
+        border-radius: 0;
+        //border:dashed white 1px;
+        //- border-radius: 60px; Note: This looks great but doesn't fit the theme
+    }
+
+    .dropdown-item {
+        font-size: 14px;
+        font-family: 'Courier New', Courier, monospace;
+        color: #aaa;
+        background-color: transparent;
+    }
+
+    .dropdown-item:hover {
+        color: #fff;
+        background-color: transparent;
+    }
+
+    .typewriter {
     font-family: 'Courier New', Courier, monospace;
     font-size: 16px;
     color: #6af;
@@ -32,10 +81,25 @@ style(type='text/css').
     }
 body
     div(class='container-fluid')
-        div(class='d-flex flex-column no-gutters')
+        div(class='d-flex flex-column')
             div(class='align-self-start mt-2')
-                h1(id='typewriter' style='--steps: 6; --duration: 0.5s; --delay: 0s;') Hello!
-            div(class='align-self-start mt-0 pt0')
+                h1(class='typewriter' style='--steps: 6; --duration: 0.5s; --delay: 0s;') Hello!
+            div(class='align-self-start')
                 - var steps = '--steps:' + message.length + ';';
-                h1(id='typewriter' style=steps + ' --duration: 2s; --delay: 2s;') #{message}
+                h1(class='typewriter' style=steps + ' --duration: 2s; --delay: 2s;') #{message}
+            nav(class='nav nav-pills d-flex flex-row justify-content-around' style='margin-top:50px;')
+                a(class='nav-link mono-font' href="#") -- All --
+                a(class='nav-link mono-font' href="#") -- Projects --
+                a(class='nav-link mono-font' href="#") -- Miscellaneous --
+            div(class='d-flex flex-column mt-5 ml-5 mr-5' style='min-height: 100px; border-bottom: dashed 1px;')
+                div(class='mono-font' style='font-size: 14') 2018 August 22                
+                div(class='d-flex flex-row' style='flex-wrap: wrap;')
+                    h1(class='mono-font') Post Title
+                    div(class='dropdown mb-3')
+                        a(class="dropdown-toggle mono-font" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") #Topic Title
+                        div(class="dropdown-menu" aria-labelledby="dropdownMenuLink")
+                            a(class="dropdown-item" href="#") Previous post
+                            a(class="dropdown-item" href="#") Older Post
+                            a(class="dropdown-item" href="#") Oldest Post Has a Very Long Title
+                p() Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus, turpis in laoreet pellentesque, massa justo vulputate urna, ac vulputate mi mauris vitae nibh. Duis feugiat nisi sed risus vestibulum faucibus. Nulla semper mi nisl, ac gravida diam blandit eget. Duis pretium vestibulum odio, eu bibendum mi pharetra sed. Duis laoreet venenatis sagittis. Quisque tincidunt nunc lorem, ac rutrum massa vulputate at. Nam tempus scelerisque maximus. Suspendisse eu scelerisque velit, facilisis blandit risus. Nunc tristique erat massa. Duis ultricies, elit eu eleifend imperdiet, augue lorem ultricies purus, quis egestas dui felis et tellus. Morbi feugiat condimentum interdum. Nam et arcu et urna mollis aliquet. Ut tempor ultricies augue, faucibus elementum libero laoreet eget. Suspendisse vestibulum augue nunc, sit amet lacinia lectus vulputate ut. Cras dapibus, tellus at suscipit accumsan, ante nisl luctus eros, a sodales dui leo ac lorem. Nullam non accumsan elit.
             include footer.pug

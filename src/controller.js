@@ -2,6 +2,8 @@ let mongoose = require('mongoose');
 let passport = require('passport');
 let models = require('./models');
 let geoip = require('geoip-lite');
+// TODO: weather-js uses depriciated msn weather api. Use something else
+// if it stops working.
 let weather = require('weather-js');
 let ipaddr = require('ipaddr.js');
 
@@ -25,13 +27,13 @@ module.exports.displayHome = (req, res) => {
 					case '4':
 					case '17':
 					case '35':
-						message = 'I hear they\'re calling for thunderstorms';
+						message = 'I hear they\'re calling for thunderstorms.';
 						break;
 					case '9':
 					case '11':
 					case '12':
 					case '40':
-						message = 'What a glorious feeling, I\'m happy again';
+						message = 'What a glorious feeling, I\'m happy again.';
 						break;
 					case '27':
 					case '28':
