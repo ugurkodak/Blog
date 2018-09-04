@@ -58,7 +58,7 @@ module.exports.displayHome = (req, res) => {
 				}
 			}
 			return res.render('home', {
-				title: 'Ugur Kodak',
+				title: 'Ugur Kodak | Home',
 				message: message
 			});
 		});
@@ -66,11 +66,31 @@ module.exports.displayHome = (req, res) => {
 	else {
 		console.error('Couldn\'t get city info from IP: "' + ip + '". Default message sent.');
 		return res.render('home', {
-			title: 'Ugur Kodak',
+			title: 'Ugur Kodak | Home',
 			message: message
 		})
 	}
 }
+
+module.exports.displayEditor = (req, res) => {
+   return res.render('editor', {
+	   title: 'Ugur Kodak | Editor'
+   });
+}
+
+// module.exports.displayNewPost = (req, res) => {
+//     models.topic.find((err, topics) => {
+// 	if (err) {
+// 	    console.log(err);
+// 	    res.end(err);
+// 	} else {
+// 	    res.render("newpost", {
+// 		title: "Ugur Kodak | New Post",
+// 		topics: topics
+// 	    });
+// 	}
+//     });
+// }
 
 // module.exports.displayBlog = (req, res) => {
 //     models.topic.find((err, topics) => {
@@ -143,19 +163,7 @@ module.exports.displayHome = (req, res) => {
 //     });
 // }
 
-// module.exports.displayNewPost = (req, res) => {
-//     models.topic.find((err, topics) => {
-// 	if (err) {
-// 	    console.log(err);
-// 	    res.end(err);
-// 	} else {
-// 	    res.render("newpost", {
-// 		title: "Ugur Kodak | New Post",
-// 		topics: topics
-// 	    });
-// 	}
-//     });
-// }
+
 
 // module.exports.createNewPost = (req, res) => {
 //     if (req.body.selectTopic == "new") {

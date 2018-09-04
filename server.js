@@ -10,9 +10,7 @@ let models = require("./src/models");
 server.set('trust proxy', true);
 server.set("views", __dirname + "/src/views");
 server.set("view engine", "pug");
-server.use(express.static(__dirname + "/src/static", {
-    redirect: false
-}));
+server.use(express.static(__dirname + "/src/static"));
 server.use(session({
     secret: "secret",
     resave: true,

@@ -5,14 +5,14 @@ router.get("/", (req, res, next) => {
     controller.displayHome(req, res);
 });
 
-// router.get("/blog", (req, res, next) => {
-//     controller.displayBlog(req, res);
-// });
+router.get("/editor", (req, res) => {
+    controller.displayEditor(req, res);
+});
 
-// router.get("/", (req, res, next) => {
-//     res.render("index", {
-// 	title: "Ugur Kodak"
-//     });
+// router.get("/newpost", controller.requireAuth, (req, res, next) => {
+//     controller.displayNewPost(req, res);
+// }).post("/newpost", controller.requireAuth, (req, res, next) => {
+//     controller.createNewPost(req, res);
 // });
 
 // router.get("/login", (req, res, next) => {
@@ -30,11 +30,7 @@ router.get("/", (req, res, next) => {
 //     controller.displayPosts(req, res);
 // })
 
-// router.get("/newpost", controller.requireAuth, (req, res, next) => {
-//     controller.displayNewPost(req, res);
-// }).post("/newpost", controller.requireAuth, (req, res, next) => {
-//     controller.createNewPost(req, res);
-// });
+
 
 // router.get("/space", (req, res, next) => {
 //     res.render("unity3d/space", {
