@@ -1,32 +1,29 @@
 include header.pug
 style(type='text/css').
-    .debug-border {
-        border: solid white 1px;
-    }
-
-    .mono-font {
-        font-family: 'Courier New', Courier, monospace;
-    }
-
-    .nav-link {
-        color: #b33;
-        user-select: none;
-    }
-    .nav-link:hover {
-        color: #f44;
-        font-family: 'Courier New', Courier, monospace;
-    }
-
-    .dropdown-toggle {
-        font-size: 14px;
+    .white-link {
         color: #aaa;
-        background-color: #000;
-        border: none;
+        outline: none;
     }
-    .dropdown-toggle:hover {
-        font-size: 14px;
+    .white-link:hover,
+    .white-link:focus,
+    .white-link:active {
         color: #fff;
         background-color: #000;
+        text-decoration: none;
+    }
+    
+    .red-link {
+        color: #b33;
+        outline: none;
+    }
+    .red-link:hover,
+    .red-link:focus,
+    .red-link:active {
+        color: #f44;
+        text-decoration: none;
+    }
+
+    .dropdown-toggle:hover {
         border: none;
         text-decoration: none;
     }
@@ -40,20 +37,6 @@ style(type='text/css').
         max-height: 300px;
         //border:dashed white 1px;
         //- border-radius: 60px; Note: This looks great but doesn't fit the theme
-    }
-
-    .dropdown-item {
-        font-size: 14px;
-        font-family: 'Courier New', Courier, monospace;
-        color: #aaa;
-        background-color: transparent;
-        white-space: normal;
-    }
-
-    .dropdown-item:hover,
-    .dropdown-item:focus {
-        color: #fff;
-        background-color: transparent;
     }
 
     .typewriter {
@@ -95,20 +78,21 @@ body
                 - var steps = '--steps:' + message.length + ';';
                 h1(class='typewriter' style=steps + ' --duration: 2s; --delay: 2s;') #{message}
             nav(class='nav nav-pills d-flex flex-row justify-content-around' style='margin-top:50px;')
-                a(class='nav-link mono-font' href="#") -- All --
-                a(class='nav-link mono-font' href="#") -- Projects --
-                a(class='nav-link mono-font' href="#") -- Miscellaneous --
-            div(class='d-flex flex-column mt-5 ml-5 mr-5' style='min-height: 100px; border-bottom: dashed 1px;')
-                div(class='mono-font' style='font-size: 14') 2018 August 22                
+                a(class='red-link nav-link' href="#") -- All --
+                a(class='red-link nav-link' href="#") -- Projects --
+                a(class='red-link nav-link' href="#") -- Miscellaneous --
+            div(class='d-flex flex-column mt-5 ml-2 mr-2' style='min-height: 100px;')
+                div(style='font-size: 14') 2018 August 22                
                 div(class='d-flex flex-row' style='flex-wrap: wrap;')
-                    h1(class='mono-font') Post Title
+                    h1() Post Title
                     //- TODO: Hide the scrollbars on the dropdown menu. Make it scrollable
                     //- and add buttons for scrolling with clicks.
                     div(class='dropdown mb-3')
-                        a(class="dropdown-toggle mono-font" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false") Topic Title #4
+                        a(class="white-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style='border: none; font-size: 14px;') Topic Title #4
                         div(class="dropdown-menu" aria-labelledby="dropdownMenuLink")
-                            a(class="dropdown-item" href="#") #3 Previous post
-                            a(class="dropdown-item" href="#") #2 Older Post
-                            a(class="dropdown-item" href="#") #1 Oldest Post Has a Very Long Title
-                p(class='mono-font' style='max-height:100px; overflow: hidden;') Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus, turpis in laoreet pellentesque, massa justo vulputate urna, ac vulputate mi mauris vitae nibh. Duis feugiat nisi sed risus vestibulum faucibus. Nulla semper mi nisl, ac gravida diam blandit eget. Duis pretium vestibulum odio, eu bibendum mi pharetra sed. Duis laoreet venenatis sagittis. Quisque tincidunt nunc lorem, ac rutrum massa vulputate at. Nam tempus scelerisque maximus. Suspendisse eu scelerisque velit, facilisis blandit risus. Nunc tristique erat massa. Duis ultricies, elit eu eleifend imperdiet, augue lorem ultricies purus, quis egestas dui felis et tellus. Morbi feugiat condimentum interdum. Nam et arcu et urna mollis aliquet. Ut tempor ultricies augue, faucibus elementum libero laoreet eget. Suspendisse vestibulum augue nunc, sit amet lacinia lectus vulputate ut. Cras dapibus, tellus at suscipit accumsan, ante nisl luctus eros, a sodales dui leo ac lorem. Nullam non accumsan elit.
+                            a(class="white-link dropdown-item" href="#" style='white-space: normal; font-size: 14px;') #3 Previous post
+                            a(class="white-link dropdown-item" href="#" style='white-space: normal; font-size: 14px;') #2 Older Post
+                            a(class="white-link dropdown-item" href="#" style='white-space: normal; font-size: 14px;') #1 Oldest Post Has a Very Long Title
+                p(id='last-post' class='collapse') Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus, turpis in laoreet pellentesque, massa justo vulputate urna, ac vulputate mi mauris vitae nibh. Duis feugiat nisi sed risus vestibulum faucibus. Nulla semper mi nisl, ac gravida diam blandit eget. Duis pretium vestibulum odio, eu bibendum mi pharetra sed. Duis laoreet venenatis sagittis. Quisque tincidunt nunc lorem, ac rutrum massa vulputate at. Nam tempus scelerisque maximus. Suspendisse eu scelerisque velit, facilisis blandit risus. Nunc tristique erat massa. Duis ultricies, elit eu eleifend imperdiet, augue lorem ultricies purus, quis egestas dui felis et tellus. Morbi feugiat condimentum interdum. Nam et arcu et urna mollis aliquet. Ut tempor ultricies augue, faucibus elementum libero laoreet eget. Suspendisse vestibulum augue nunc, sit amet lacinia lectus vulputate ut. Cras dapibus, tellus at suscipit accumsan, ante nisl luctus eros, a sodales dui leo ac lorem. Nullam non accumsan elit.
+                a(class='white-link' data-toggle="collapse" href="#last-post" role="button" aria-expanded="false" aria-controls="last-post" style='border-top: dashed 1px; height: 20px;')
         include footer.pug
