@@ -1,98 +1,106 @@
-include header.pug
-style(type='text/css').
-    .white-link {
-        color: #aaa;
-        outline: none;
-    }
-    .white-link:hover,
-    .white-link:focus,
-    .white-link:active {
-        color: #fff;
-        background-color: #000;
-        text-decoration: none;
-    }
-    
-    .red-link {
-        color: #b33;
-        outline: none;
-    }
-    .red-link:hover,
-    .red-link:focus,
-    .red-link:active {
-        color: #f44;
-        text-decoration: none;
-    }
+html(lang='en')
+    head
+        include header.pug
+        style(type='text/css').
+            .btn-outgoing {
+                color: #b33;
+                outline: none;
+                user-select: none;
+            }
+            .btn-outgoing:hover,
+            .btn-outgoing:focus,
+            .btn-outgoing:active {
+                color: #f55;
+                text-decoration: none;
+                background-color: transparent;
+            }
 
-    .dropdown-toggle:hover {
-        border: none;
-        text-decoration: none;
-    }
+            .btn-current {
+                color: #3b3;
+            }
 
-    .dropdown-menu {
-        background-color: #000;
-        border-radius: 0;
-        overflow: auto;
-        overflow-x: hidden;
-        //overflow-y: hidden;
-        max-height: 300px;
-        //border:dashed white 1px;
-        //- border-radius: 60px; Note: This looks great but doesn't fit the theme
-    }
+            .btn-local {
+                color: #aaa;
+                outline: none;
+            }
+            .btn-local:hover,
+            .btn-local:focus,
+            .btn-local:active {
+                color: #fff;
+                background-color: transparent;
+                text-decoration: none;
+            }
 
-    .typewriter {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-    color: #6af;
-    user-select: none;
-    width: 0;
-    overflow: hidden; /* Ensures the content is not revealed until the animation */
-    border-right: 1px solid transparent; /* The typwriter cursor */
-    white-space: nowrap; /* Keeps the content on a single line */
-    //margin: 0 auto; /* Gives that scrolling effect as the typing happens */
-    animation: 
-        typing var(--duration) steps(var(--steps), end) var(--delay) forwards,
-        blink-caret 1s step-end var(--duration),
-        flicker 4s ease 3s 1 forwards;
-    }
-    @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-    }
-    @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: white; }
-    }
-    @keyframes flicker {
-    5% { opacity: 0.5 }
-    10% { opacity: 1 }
-    20% { opacity: 0.2 }
-    50% { opacity: 1}
-    100% {white-space: normal }
-    }
-body
-    div(class='container-fluid')
-        div(class='d-flex flex-column')
-            div(class='align-self-start mt-2')
-                h1(class='typewriter' style='--steps: 6; --duration: 0.5s; --delay: 0s;') Hello!
-            div(class='align-self-start')
-                - var steps = '--steps:' + message.length + ';';
-                h1(class='typewriter' style=steps + ' --duration: 2s; --delay: 2s;') #{message}
-            nav(class='nav nav-pills d-flex flex-row justify-content-around' style='margin-top:50px;')
-                a(class='red-link nav-link' href="#") -- All --
-                a(class='red-link nav-link' href="#") -- Projects --
-                a(class='red-link nav-link' href="#") -- Miscellaneous --
-            div(class='d-flex flex-column mt-5 ml-2 mr-2' style='min-height: 100px;')
-                div(style='font-size: 14') 2018 August 22                
-                div(class='d-flex flex-row' style='flex-wrap: wrap;')
-                    h1() Post Title
-                    //- TODO: Hide the scrollbars on the dropdown menu. Make it scrollable
-                    //- and add buttons for scrolling with clicks.
-                    div(class='dropdown mb-3')
-                        a(class="white-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style='border: none; font-size: 14px;') Topic Title #4
-                        div(class="dropdown-menu" aria-labelledby="dropdownMenuLink")
-                            a(class="white-link dropdown-item" href="#" style='white-space: normal; font-size: 14px;') #3 Previous post
-                            a(class="white-link dropdown-item" href="#" style='white-space: normal; font-size: 14px;') #2 Older Post
-                            a(class="white-link dropdown-item" href="#" style='white-space: normal; font-size: 14px;') #1 Oldest Post Has a Very Long Title
-                p(id='last-post' class='collapse') Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus, turpis in laoreet pellentesque, massa justo vulputate urna, ac vulputate mi mauris vitae nibh. Duis feugiat nisi sed risus vestibulum faucibus. Nulla semper mi nisl, ac gravida diam blandit eget. Duis pretium vestibulum odio, eu bibendum mi pharetra sed. Duis laoreet venenatis sagittis. Quisque tincidunt nunc lorem, ac rutrum massa vulputate at. Nam tempus scelerisque maximus. Suspendisse eu scelerisque velit, facilisis blandit risus. Nunc tristique erat massa. Duis ultricies, elit eu eleifend imperdiet, augue lorem ultricies purus, quis egestas dui felis et tellus. Morbi feugiat condimentum interdum. Nam et arcu et urna mollis aliquet. Ut tempor ultricies augue, faucibus elementum libero laoreet eget. Suspendisse vestibulum augue nunc, sit amet lacinia lectus vulputate ut. Cras dapibus, tellus at suscipit accumsan, ante nisl luctus eros, a sodales dui leo ac lorem. Nullam non accumsan elit.
-                a(class='white-link' data-toggle="collapse" href="#last-post" role="button" aria-expanded="false" aria-controls="last-post" style='border-top: dashed 1px; height: 20px;')
-        include footer.pug
+            .dropdown-toggle:hover {
+                border: none;
+                text-decoration: none;
+            }
+
+            .dropdown-menu {
+                background-color: #000;
+                border-radius: 0;
+                overflow: auto;
+                overflow-x: hidden;
+                //overflow-y: hidden;
+                max-height: 300px;
+                //border:dashed white 1px;
+                //- border-radius: 60px; Note: This looks great but doesn't fit the theme
+            }
+
+            .typewriter {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+            color: #6ac;
+            user-select: none;
+            width: 0;
+            overflow: hidden; /* Ensures the content is not revealed until the animation */
+            border-right: 1px solid transparent; /* The typwriter cursor */
+            white-space: nowrap; /* Keeps the content on a single line */
+            //margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+            animation: 
+                typing var(--duration) steps(var(--steps), end) var(--delay) forwards,
+                blink-caret 1s step-end var(--duration),
+                flicker 4s ease 3s 1 forwards;
+            }
+            @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+            }
+            @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: white; }
+            }
+            @keyframes flicker {
+            5% { opacity: 0.5 }
+            10% { opacity: 1 }
+            20% { opacity: 0.2 }
+            50% { opacity: 1}
+            100% {white-space: normal }
+            }
+    body
+        div(class='container-fluid')
+            div(class='d-flex flex-column')
+                div(class='align-self-start mt-2')
+                    h1(class='typewriter' style='--steps: 6; --duration: 0.5s; --delay: 0s;') Hello!
+                div(class='align-self-start')
+                    - var steps = '--steps:' + message.length + ';';
+                    h1(class='typewriter' style=steps + ' --duration: 2s; --delay: 2s;') #{message}
+                nav(class='nav nav-pills d-flex flex-row justify-content-around' style='margin-top:50px;')
+                    a(class='btn-outgoing btn-current nav-link' href="#") All
+                    a(class='btn-outgoing nav-link' href="#") Projects
+                    a(class='btn-outgoing nav-link' href="#") Miscellaneous
+                div(class='d-flex flex-column mt-5 ml-2 mr-2' style='min-height: 100px;')
+                    div(style='font-size: 14') 2018 August 22                
+                    div(class='d-flex flex-row' style='flex-wrap: wrap;')
+                        h1() Post Title
+                        //- TODO: Hide the scrollbars on the dropdown menu. Make it scrollable
+                        //- and add buttons for scrolling with clicks.
+                        div(class='dropdown mb-3')
+                            a(class="btn-local dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style='border: none; font-size: 14px;') Topic Title #4
+                            div(class="dropdown-menu" aria-labelledby="dropdownMenuLink")
+                                a(class="btn-outgoing dropdown-item" href="#" style='white-space: normal; font-size: 14px;') #3 Previous post
+                                a(class="btn-outgoing dropdown-item" href="#" style='white-space: normal; font-size: 14px;') #2 Older Post
+                                a(class="btn-outgoing dropdown-item" href="#" style='white-space: normal; font-size: 14px;') #1 Oldest Post Has a Very Long Title
+                    p(id='last-post' class='collapse') Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus, turpis in laoreet pellentesque, massa justo vulputate urna, ac vulputate mi mauris vitae nibh. Duis feugiat nisi sed risus vestibulum faucibus. Nulla semper mi nisl, ac gravida diam blandit eget. Duis pretium vestibulum odio, eu bibendum mi pharetra sed. Duis laoreet venenatis sagittis. Quisque tincidunt nunc lorem, ac rutrum massa vulputate at. Nam tempus scelerisque maximus. Suspendisse eu scelerisque velit, facilisis blandit risus. Nunc tristique erat massa. Duis ultricies, elit eu eleifend imperdiet, augue lorem ultricies purus, quis egestas dui felis et tellus. Morbi feugiat condimentum interdum. Nam et arcu et urna mollis aliquet. Ut tempor ultricies augue, faucibus elementum libero laoreet eget. Suspendisse vestibulum augue nunc, sit amet lacinia lectus vulputate ut. Cras dapibus, tellus at suscipit accumsan, ante nisl luctus eros, a sodales dui leo ac lorem. Nullam non accumsan elit.
+                    a(class='btn-local' data-toggle="collapse" href="#last-post" role="button" aria-expanded="false" aria-controls="last-post" style='border-top: dashed 1px; text-align: center; font-size: 20px;') &#8633;
+            include footer.pug

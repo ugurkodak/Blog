@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
 let passport = require('passport');
-let models = require('./models');
+let models = require('./model');
 let geoip = require('geoip-lite');
 // TODO: weather-js uses depriciated msn weather api. Use something else
 // if it stops working.

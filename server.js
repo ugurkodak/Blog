@@ -5,7 +5,7 @@ let session = require('express-session');
 let passport = require("passport");
 let bodyParser = require("body-parser");
 let router = require("./src/router");
-let models = require("./src/models");
+let models = require("./src/model");
 
 server.set('trust proxy', true);
 server.set("views", __dirname + "/src/views");
