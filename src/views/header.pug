@@ -1,10 +1,10 @@
 meta(charset='UTF-8')
 meta(name='description' content='Quick maffs.')
 meta(name='keywords' content='ugur,kodak,blog')
-meta(name='author' content="Ugur Kodak")
+meta(name='author' content='Ugur Kodak')
 meta(name='viewport' content='width=device-width, initial-scale=1.0')
 title #{title}
-link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous")
+link(rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous')
 style(type='text/css').
 	body {
 		background-color: #000;
@@ -14,4 +14,35 @@ style(type='text/css').
 		font-family: 'Courier New', Courier, monospace;
 		color: #aaa;
 		background-color: transparent;
+	}
+	button, 
+	button:focus {
+		outline: none;
+		cursor: pointer;
+	}
+	.btn-outgoing {
+		border: none;
+		color: #b33;
+		outline: none;
+		user-select: none;
+	}
+	.btn-outgoing:hover,
+	.btn-outgoing:focus,
+	.btn-outgoing:active {
+		color: #f55;
+		background-color: transparent;
+	}
+	.btn-current {
+		color: #3b3;
+	}
+	.btn-local {
+		color: #aaa;
+		outline: none;
+	}
+	.btn-local:hover,
+	.btn-local:focus,
+	.btn-local:active {
+		color: #fff;
+		background-color: transparent;
+		text-decoration: none;
 	}

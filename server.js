@@ -5,7 +5,7 @@ let session = require('express-session');
 let passport = require("passport");
 let bodyParser = require("body-parser");
 let router = require("./src/router");
-let models = require("./src/model");
+let model = require("./src/model");
 
 server.set('trust proxy', true);
 server.set("views", __dirname + "/src/views");
@@ -22,9 +22,9 @@ server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({extended: true}));
 server.use(router);
 
-passport.use(models.user.createStrategy());
-passport.serializeUser(models.user.serializeUser());
-passport.deserializeUser(models.user.deserializeUser());
+passport.use(model.user.createStrategy());
+passport.serializeUser(model.user.serializeUser());
+passport.deserializeUser(model.user.deserializeUser());
 
 server.listen(port, function() {
     console.log("Node app is running on port " + port);

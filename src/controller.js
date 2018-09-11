@@ -73,9 +73,47 @@ module.exports.displayHome = (req, res) => {
 }
 
 module.exports.displayEditor = (req, res) => {
-   return res.render('editor', {
-	   title: 'Ugur Kodak | Editor'
-   });
+	return res.render('editor', {
+		title: 'Ugur Kodak | Editor'
+	});
+}
+
+module.exports.displayLogin = (req, res) => {
+	if (!req.user) {
+		res.render('login', {
+			title: 'Ugur Kodak | Login'
+		});
+	}
+	else {
+		return res.redirect('/');
+	}
+}
+
+module.exports.processLogin = (req, res, next) => {
+	passport.authenticate('local', (err, user, info) => {
+		if (err)
+			return next(err);
+		if (!user)
+			return res.redirect('/login');
+		req.logIn(user, (err) => {
+			if (err)
+				return next(err);
+			return res.redirect(req.session.redirect ? req.session.redirect : '/');
+		});
+	})(req, res, next);
+}
+
+module.exports.processLogout = (req, res) => {
+	req.logout();
+	res.redirect('/');
+}
+
+module.exports.requireAuth = (req, res, next) => {
+	if (process.env.AUTH_REQUIRED == 'true' && !req.isAuthenticated()) {
+		req.session.redirect = req.path;
+		return res.redirect('/login');
+	}
+	next();
 }
 
 // module.exports.displayNewPost = (req, res) => {
@@ -116,39 +154,6 @@ module.exports.displayEditor = (req, res) => {
 //     });
 // }
 
-// module.exports.displayLogin = (req, res) => {
-//     if (!req.user){
-// 	res.render("login", {
-// 	    title: "Ugur Kodak | Login"
-// 	});
-//     }
-//     else {
-// 	return res.redirect("/posts");
-//     }
-// }
-
-// module.exports.processLogin = (req, res, next) => {
-//     passport.authenticate("local", (err, user, info) => {
-// 	if(err) {
-// 	    return next(err);
-// 	}
-// 	if(!user) {
-// 	    return res.redirect("/login");
-// 	}
-// 	req.logIn(user, function(err) {
-// 	    if (err) {
-// 		return next(err);
-// 	    }
-// 	    return res.redirect(req.session.redirect ? req.session.redirect : "/posts");
-// 	});
-//     })(req, res, next);
-// }
-
-// module.exports.processLogout = (req, res) => {
-//     req.logout();
-//     res.redirect('/');
-// }
-
 // module.exports.displayPosts = (req, res) => {
 //     models.topic.find((err, topics) => {
 // 	if (err) {
@@ -162,8 +167,6 @@ module.exports.displayEditor = (req, res) => {
 // 	}
 //     });
 // }
-
-
 
 // module.exports.createNewPost = (req, res) => {
 //     if (req.body.selectTopic == "new") {
@@ -195,12 +198,4 @@ module.exports.displayEditor = (req, res) => {
 // 	    }
 // 	});
 //     }
-// }
-
-// module.exports.requireAuth = (req, res, next) => {
-//     if (!req.isAuthenticated()) {
-// 	req.session.redirect = req.path;
-// 	return res.redirect("/login");
-//     }
-//     next();
 // }

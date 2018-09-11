@@ -1,11 +1,8 @@
 html(lang='en')
     head
         include header.pug
-        link(rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css")
+        link(rel='stylesheet' href='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css')
         style(type='text/css').
-            .btn-submit {
-                
-            }
     body
         div(class='container-fluid')
             form(class='d-flex flex-column')
@@ -13,9 +10,9 @@ html(lang='en')
                     label(for='title') "title": "
                     input(id='title' type='text' style='border: none; outline: none;')
                     span "
-                    button(class='btn-submit' type="submit" style='background-color: transparent; margin-left: 4px; border: none color ') Submit
+                    button(class='btn-outgoing' type='submit') Submit
                 textarea(id='editor')
-            script(src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js")
+            script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
             script().
                 var simpleMDE = new SimpleMDE({ element: document.getElementById('editor') });
             include footer.pug
