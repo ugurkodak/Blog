@@ -5,14 +5,30 @@ html(lang='en')
         style(type='text/css').
     body
         div(class='container-fluid')
-            form(class='d-flex flex-column')
+            form(class='d-flex flex-column' method='post')
                 div(class='form-group flex-row')
-                    label(for='title') "title": "
-                    input(id='title' type='text' style='border: none; outline: none;')
-                    span "
-                    button(class='btn-outgoing' type='submit') Submit
-                textarea(id='editor')
+                    label(for='topic-select') Topic Title:
+                    //- TODO: select value will never be used replace it with dropdown and remove it out of the form 
+                    input(type='text' id='topic-title' name='topic-title' autofocus)
+                    select(id='topic-select' class='btn-local' onchange='toggleTopicInput()')
+                        option(value='new') New Topic
+                        option(value='asdasd') Existing Topic With a Long Title
+                div(class='form-group flex-row')
+                    label(for='post-title') Post Title:
+                    input(type='text' id='post-title' name='post-title' required)
+                textarea(id='content' name='content')
+                button(type='submit' class='btn-outgoing align-self-end') Submit
             script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
             script().
-                var simpleMDE = new SimpleMDE({ element: document.getElementById('editor') });
+                var simpleMDE = new SimpleMDE({ element: document.getElementById('content') });
+                function toggleTopicInput() {
+                    if ($("#topic-select").val() == "new") {
+                        $("#topic-title").val('');                        
+                        $("#topic-title").show();
+                    }
+                    else {
+                        $("#topic-title").hide();
+                        $("#topic-title").val($("#topic-select").val());
+                    }
+                }
             include footer.pug
