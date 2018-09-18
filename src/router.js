@@ -7,7 +7,7 @@ router.get("/", (req, res, next) => {
 
 router.get("/editor",controller.requireAuth, (req, res, next) => {
     controller.displayEditor(req, res);
-}).post("/newpost", controller.requireAuth, (req, res, next) => {
+}).post("/editor", controller.requireAuth, (req, res, next) => {
     controller.createNewPost(req, res);
 });
 

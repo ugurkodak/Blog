@@ -1,6 +1,6 @@
 let mongoose = require('mongoose');
 let passport = require('passport');
-let models = require('./model');
+let model = require('./model');
 let geoip = require('geoip-lite');
 // TODO: weather-js uses depriciated msn weather api. Use something else
 // if it stops working.
@@ -72,11 +72,6 @@ module.exports.displayHome = (req, res) => {
 	}
 }
 
-module.exports.displayEditor = (req, res) => {
-	return res.render('editor', {
-		title: 'Ugur Kodak | Editor'
-	});
-}
 
 module.exports.displayLogin = (req, res) => {
 	if (!req.user) {
@@ -116,8 +111,44 @@ module.exports.requireAuth = (req, res, next) => {
 	next();
 }
 
+module.exports.displayEditor = (req, res) => {
+	model.topic.find({}, 'title', (err, topics) => {
+		return res.render('editor', {
+			title: 'Ugur Kodak | Editor',
+			topics: topics
+		});
+	});
+}
+
+//note: topic_title can be real title if new or _id if existing
+module.exports.createNewPost = (req, res) => {
+	if (req.body.topic_select == 'new') {
+		model.topic.create(model.topic({
+			title: req.body.topic_title,
+			tags: ['test'] //todo: not implemented
+		}), (err, topic) => {
+			model.post.create(model.post({
+				title: req.body.post_title,
+				content: req.body.content,
+				topic: topic._id
+			}), (err, post) => {
+				console.log('New Post: ' + post.title + ' @New Topic');
+				res.redirect('/');
+			});
+		});
+	} else {
+		model.post.create(model.post({
+			title: req.body.post_title,
+			content: req.body.content,
+			topic: req.body.topic_title
+		}), (err, post) => {
+			res.redirect('/');
+		});
+	}
+}
+
 // module.exports.displayNewPost = (req, res) => {
-//     models.topic.find((err, topics) => {
+//     model.topic.find((err, topics) => {
 // 	if (err) {
 // 	    console.log(err);
 // 	    res.end(err);
@@ -131,7 +162,7 @@ module.exports.requireAuth = (req, res, next) => {
 // }
 
 // module.exports.displayBlog = (req, res) => {
-//     models.topic.find((err, topics) => {
+//     model.topic.find((err, topics) => {
 // 	if (err) {
 // 	    console.log(err);
 // 	    res.end(err);
@@ -155,7 +186,7 @@ module.exports.requireAuth = (req, res, next) => {
 // }
 
 // module.exports.displayPosts = (req, res) => {
-//     models.topic.find((err, topics) => {
+//     model.topic.find((err, topics) => {
 // 	if (err) {
 // 	    console.log(err);
 // 	    res.end(err);
@@ -170,7 +201,7 @@ module.exports.requireAuth = (req, res, next) => {
 
 // module.exports.createNewPost = (req, res) => {
 //     if (req.body.selectTopic == "new") {
-// 	models.topic.create(models.topic({
+// 	model.topic.create(model.topic({
 // 	    title: req.body.topicTitle,
 // 	    description: req.body.topicDescription,
 // 	    posts: {
@@ -186,7 +217,7 @@ module.exports.requireAuth = (req, res, next) => {
 // 	    }
 // 	});
 //     } else {
-// 	models.topic.findByIdAndUpdate(req.body.selectTopic, { $push: { posts: {
+// 	model.topic.findByIdAndUpdate(req.body.selectTopic, { $push: { posts: {
 // 	    title: req.body.postTitle,
 // 	    content: req.body.postContent
 // 	}}} ,(err, topic) => {
