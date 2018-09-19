@@ -1,4 +1,5 @@
 let mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 let passport = require('passport');
 let model = require('./model');
 let geoip = require('geoip-lite');
@@ -7,7 +8,7 @@ let geoip = require('geoip-lite');
 let weather = require('weather-js');
 let ipaddr = require('ipaddr.js');
 
-module.exports.displayHome = (req, res) => {
+module.exports.displayHome = async (req, res) => {
 	let message = 'How about this weather?';
 	let ip = req.ip;
 	if (ipaddr.process(ip).kind() == 'ipv4')
@@ -57,19 +58,38 @@ module.exports.displayHome = (req, res) => {
 						break;
 				}
 			}
-			return res.render('home', {
-				title: 'Ugur Kodak | Home',
-				message: message
-			});
 		});
 	}
-	else {
+	else
 		console.error('Couldn\'t get city info from IP: "' + ip + '". Default message sent.');
-		return res.render('home', {
-			title: 'Ugur Kodak | Home',
-			message: message
-		})
+
+	let data = [];
+	let posts = await model.post.find({}).sort('-date').exec();
+	for (let i = 0; i < posts.length; i++) {
+		// let title = posts[i].title;
+		let topic = await model.topic.findOne({ _id: posts[i].topic }).exec();
+		let others = await model.post.find({}).where('topic').equals(topic._id).where('_id').ne(posts[i]._id).sort('-date').exec();
+		if (i == 0) {
+			let content = await model.content.findOne({ _id: posts[i].content }).exec();
+			data.push({
+				post: posts[i],
+				topic: topic,
+				others: others,
+				content: content
+			});
+		} else {
+			data.push({
+				post: posts[i],
+				topic: topic,
+				others: others
+			});
+		}
 	}
+	return res.render('home', {
+		title: 'Ugur Kodak | Home',
+		message: message,
+		data: data
+	});
 }
 
 
@@ -121,28 +141,36 @@ module.exports.displayEditor = (req, res) => {
 }
 
 //note: topic_title can be real title if new or _id if existing
+//todo: error checking
 module.exports.createNewPost = (req, res) => {
 	if (req.body.topic_select == 'new') {
 		model.topic.create(model.topic({
 			title: req.body.topic_title,
 			tags: ['test'] //todo: not implemented
 		}), (err, topic) => {
-			model.post.create(model.post({
-				title: req.body.post_title,
-				content: req.body.content,
-				topic: topic._id
-			}), (err, post) => {
-				console.log('New Post: ' + post.title + ' @New Topic');
-				res.redirect('/');
+			model.content.create(model.content({
+				text: req.body.content
+			}), (err, content) => {
+				model.post.create(model.post({
+					title: req.body.post_title,
+					topic: topic._id,
+					content: content._id
+				}), (err, post) => {
+					res.redirect('/');
+				});
 			});
 		});
 	} else {
-		model.post.create(model.post({
-			title: req.body.post_title,
-			content: req.body.content,
-			topic: req.body.topic_title
-		}), (err, post) => {
-			res.redirect('/');
+		model.content.create(model.content({
+			text: req.body.content
+		}), (err, content) => {
+			model.post.create(model.post({
+				title: req.body.post_title,
+				topic: req.body.topic_title,
+				content: content._id
+			}), (err, post) => {
+				res.redirect('/');
+			});
 		});
 	}
 }

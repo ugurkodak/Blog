@@ -46,7 +46,7 @@ html(lang='en')
             50% { opacity: 1}
             100% {white-space: normal }
             }
-    body
+    body()
         div(class='container-fluid')
             div(class='d-flex flex-column')
                 div(class='align-self-start mt-2')
@@ -58,18 +58,27 @@ html(lang='en')
                     a(class='btn-outgoing btn-current nav-link' href='#') All
                     a(class='btn-outgoing nav-link' href='#') Projects
                     a(class='btn-outgoing nav-link' href='#') Miscellaneous
+                //- //////
                 div(class='d-flex flex-column mt-5 ml-2 mr-2' style='min-height: 100px;')
-                    div(style='font-size: 14') 2018 August 22                
-                    div(class='d-flex flex-row' style='flex-wrap: wrap;')
-                        h1() Post Title
-                        //- TODO: Hide the scrollbars on the dropdown menu. Make it scrollable
-                        //- and add buttons for scrolling with clicks.
-                        div(class='dropdown mb-3')
-                            a(class='btn-local dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 14px;') Topic Title #4
-                            div(class='dropdown-menu' aria-labelledby='dropdownMenuLink')
-                                a(class='btn-outgoing dropdown-item' href='#' style='white-space: normal; font-size: 14px;') #3 Previous post
-                                a(class='btn-outgoing dropdown-item' href='#' style='white-space: normal; font-size: 14px;') #2 Older Post
-                                a(class='btn-outgoing dropdown-item' href='#' style='white-space: normal; font-size: 14px;') #1 Oldest Post Has a Very Long Title
-                    p(id='last-post' class='collapse') Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus, turpis in laoreet pellentesque, massa justo vulputate urna, ac vulputate mi mauris vitae nibh. Duis feugiat nisi sed risus vestibulum faucibus. Nulla semper mi nisl, ac gravida diam blandit eget. Duis pretium vestibulum odio, eu bibendum mi pharetra sed. Duis laoreet venenatis sagittis. Quisque tincidunt nunc lorem, ac rutrum massa vulputate at. Nam tempus scelerisque maximus. Suspendisse eu scelerisque velit, facilisis blandit risus. Nunc tristique erat massa. Duis ultricies, elit eu eleifend imperdiet, augue lorem ultricies purus, quis egestas dui felis et tellus. Morbi feugiat condimentum interdum. Nam et arcu et urna mollis aliquet. Ut tempor ultricies augue, faucibus elementum libero laoreet eget. Suspendisse vestibulum augue nunc, sit amet lacinia lectus vulputate ut. Cras dapibus, tellus at suscipit accumsan, ante nisl luctus eros, a sodales dui leo ac lorem. Nullam non accumsan elit.
-                    a(class='btn-local' data-toggle='collapse' href='#last-post' role='button' aria-expanded='false' aria-controls='last-post' style='border-top: dashed 1px; text-align: center; font-size: 20px; user-select: none;') &#8633;
+                    each item, i in data
+                        -
+                            let date = item.post.date.toLocaleDateString("en-US", {
+                                year: 'numeric', month: 'long', day: 'numeric'
+                            });
+                        div(style='font-size: 14') #{date}
+                        div(class='d-flex flex-row' style='flex-wrap: wrap;')
+                            h1() #{item.post.title.toString()}
+                            div(class='dropdown mb-3')
+                                //- todo: add index property to post
+                                a(class='btn-local dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 14px;') #{item.topic.title.toString()} #INDEX
+                                div(class='dropdown-menu' aria-labelledby='dropdownMenuLink')
+                                    each other in item.others
+                                        a(class='btn-outgoing dropdown-item' href='#' style='white-space: normal; font-size: 14px;') #INDEX #{other.title.toString()}
+                        if i == 0
+                            div(id='last-post' class='collapse post-content')
+                            a(class='btn-local' data-toggle='collapse' href='#last-post' role='button' aria-expanded='false' aria-controls='last-post' style='border-top: dashed 1px; text-align: center; font-size: 20px; user-select: none;') &#8633;
             include footer.pug
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js")
+            script().
+                let md = window.markdownit();
+                $("#last-post").append(md.render('#{data[0].content.text.toString()}'));
