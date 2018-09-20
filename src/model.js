@@ -12,8 +12,8 @@ let topic = mongoose.model('topic', new mongoose.Schema({
 let post = mongoose.model('post', new mongoose.Schema({
     date: {type: Date, default: Date.now},
     title: String,
-    topic: { type: mongoose.Schema.Types.ObjectId, ref: 'topic' },
-    content: { type: mongoose.Schema.Types.ObjectId, ref: 'content' } 
+    topic_id: { type: mongoose.Schema.Types.ObjectId, ref: 'topic' },
+    content_id: { type: mongoose.Schema.Types.ObjectId, ref: 'content' }
     // removed: {type: Boolean, default: false} maybe add ability to make a post private
 }));
 

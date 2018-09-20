@@ -79,6 +79,8 @@ html(lang='en')
                             a(class='btn-local' data-toggle='collapse' href='#last-post' role='button' aria-expanded='false' aria-controls='last-post' style='border-top: dashed 1px; text-align: center; font-size: 20px; user-select: none;') &#8633;
             include footer.pug
             script(src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js")
-            script().
-                let md = window.markdownit();
-                $("#last-post").append(md.render('#{data[0].content.text.toString()}'));
+            if data[0]
+                //- todo: solve the escaped interpolation for the markdown rendering. chrome throws warning.
+                script().
+                    let md = window.markdownit();
+                    $("#last-post").append(md.render(!{JSON.stringify(data[0].content.text)}));
