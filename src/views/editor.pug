@@ -6,16 +6,19 @@ html(lang='en')
     body
         div(class='container-fluid')
             form(class='d-flex flex-column' method='post')
-                div(class='form-group flex-row')
+                div(class='form-group flex-row mb-0 pb-0')
                     label(for='topic-select') Topic Title:&nbsp;
                     input(type='text' id='topic-title' name='topic_title' autofocus)
                     select(id='topic-select' name='topic_select' class='btn-local' onchange='toggleTopicInput()')
                         option(value='new') New Topic
                         each topic in topics
                             option(value= topic._id) #{topic.title}
-                div(class='form-group flex-row')
+                div(class='form-group flex-row mb-0 pb-0')
                     label(for='post-title') Post Title:&nbsp;
                     input(type='text' id='post-title' name='post_title' required)
+                div(class='form-group flex-row mb-0 pb-0')
+                    label(for='tags') Tags:&nbsp;
+                    input(type='text' id='tags' name='tags' required)
                 textarea(id='content' name='content')
                 button(type='submit' class='btn-outgoing align-self-end') Submit
             script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')

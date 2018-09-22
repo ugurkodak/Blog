@@ -63,6 +63,20 @@ module.exports.displayHome = async (req, res) => {
     else
         console.error('Couldn\'t get city info from IP: "' + ip + '". Default message sent.');
 
+    let topics = await model.topic.find({}).exec().catch((err) => {
+        return console.error(err);
+    });
+    let tags = [];
+    topics.forEach(topic => {
+        topic.tags.forEach(tag => {
+            tags.push(tag.toString());
+        });
+    });
+
+    tags = tags.filter((tag, pos) => {
+        return tags.indexOf(tag) == pos;
+    });
+
     let data = [];
     let posts = await model.post.find({}).
         sort('-date').exec().catch((err) => {
@@ -99,7 +113,8 @@ module.exports.displayHome = async (req, res) => {
     return res.render('home', {
         title: 'Ugur Kodak | Home',
         message: message,
-        data: data
+        data: data,
+        tags: tags
     });
 }
 
@@ -158,7 +173,7 @@ module.exports.createNewPost = async (req, res) => {
     if (req.body.topic_select == 'new') {
         topic = await model.topic.create(model.topic({
             title: req.body.topic_title,
-            tags: ['test'] //todo: not implemented
+            tags: req.body.tags.split(' ')
         })).catch((err) => {
             return console.log(err);
         });
