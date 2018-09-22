@@ -65,25 +65,21 @@ module.exports.displayHome = async (req, res) => {
 
     let data = [];
     let posts = await model.post.find({}).
-        sort('-date').exec().
-        catch((err) => {
+        sort('-date').exec().catch((err) => {
             return console.error(err);
         });
     for (let i = 0; i < posts.length; i++) {
         let topic = await model.topic.findOne({ _id: posts[i].topic_id }).
-            exec().
-            catch((err) => {
+            exec().catch((err) => {
                 return console.error(err);
             });
         let others = await model.post.find({}).
-            where('topic_id').equals(topic._id).where('_id').ne(posts[i]._id).sort('-date').exec().
-            catch((err) => {
+            where('topic_id').equals(topic._id).where('_id').ne(posts[i]._id).sort('-date').exec().catch((err) => {
                 return console.error(err);
             });
         if (i == 0) {
             let content = await model.content.findOne({ _id: posts[i].content_id }).
-                exec().
-                catch((err) => {
+                exec().catch((err) => {
                     return console.error(err);
                 });;
             data.push({
@@ -99,11 +95,11 @@ module.exports.displayHome = async (req, res) => {
                 others: others
             });
         }
-	}
+    }
     return res.render('home', {
-    	title: 'Ugur Kodak | Home',
-    	message: message,
-    	data: data
+        title: 'Ugur Kodak | Home',
+        message: message,
+        data: data
     });
 }
 
@@ -156,38 +152,35 @@ module.exports.displayEditor = (req, res) => {
 }
 
 //note: topic_title can be real title if new or _id if existing
-//todo: error checking
-module.exports.createNewPost = (req, res) => {
+module.exports.createNewPost = async (req, res) => {
+    let topic;
+    let content;
     if (req.body.topic_select == 'new') {
-        model.topic.create(model.topic({
+        topic = await model.topic.create(model.topic({
             title: req.body.topic_title,
             tags: ['test'] //todo: not implemented
-        }), (err, topic) => {
-            model.content.create(model.content({
-                text: req.body.content
-            }), (err, content) => {
-                model.post.create(model.post({
-                    title: req.body.post_title,
-                    topic_id: topic._id,
-                    content_id: content._id
-                }), (err, post) => {
-                    res.redirect('/');
-                });
-            });
+        })).catch((err) => {
+            return console.log(err);
         });
     } else {
-        model.content.create(model.content({
-            text: req.body.content
-        }), (err, content) => {
-            model.post.create(model.post({
-                title: req.body.post_title,
-                topic_id: req.body.topic_title,
-                content_id: content._id
-            }), (err, post) => {
-                res.redirect('/');
-            });
+        topic = await model.topic.findOneAndUpdate({ _id: req.body.topic_title }, { $inc: { post_count: 1 } }, {'new': true}).exec().catch((err) => {
+            return console.log(err);
         });
     }
+    content = await model.content.create(model.content({
+        text: req.body.content
+    })).catch((err) => {
+        return console.log(err);
+    });
+    await model.post.create(model.post({
+        title: req.body.post_title,
+        topic_id: topic._id,
+        index: topic.post_count,
+        content_id: content._id
+    })).catch((err) => {
+        return console.log(err);
+    });
+    res.redirect('/');
 }
 
 // module.exports.displayNewPost = (req, res) => {

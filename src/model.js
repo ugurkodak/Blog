@@ -6,6 +6,7 @@ mongoose.connect(keys.dbURI, {useMongoClient: true});
 
 let topic = mongoose.model('topic', new mongoose.Schema({
     title: String,
+    post_count: {type: Number, default: 1},
     tags: [String]
 }));
 
@@ -13,6 +14,7 @@ let post = mongoose.model('post', new mongoose.Schema({
     date: {type: Date, default: Date.now},
     title: String,
     topic_id: { type: mongoose.Schema.Types.ObjectId, ref: 'topic' },
+    index: Number,
     content_id: { type: mongoose.Schema.Types.ObjectId, ref: 'content' }
     // removed: {type: Boolean, default: false} maybe add ability to make a post private
 }));

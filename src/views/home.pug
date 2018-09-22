@@ -2,9 +2,12 @@ html(lang='en')
     head
         include header.pug
         style(type='text/css').
-            .dropdown-toggle:hover {
+            #dropdown-others:hover {
                 border: none;
                 text-decoration: none;
+            }
+            .no-caret:after {
+                display: none;
             }
             .dropdown-menu {
                 background-color: #000;
@@ -58,7 +61,6 @@ html(lang='en')
                     a(class='btn-outgoing btn-current nav-link' href='#') All
                     a(class='btn-outgoing nav-link' href='#') Projects
                     a(class='btn-outgoing nav-link' href='#') Miscellaneous
-                //- //////
                 div(class='d-flex flex-column mt-5 ml-2 mr-2' style='min-height: 100px;')
                     each item, i in data
                         -
@@ -69,11 +71,13 @@ html(lang='en')
                         div(class='d-flex flex-row' style='flex-wrap: wrap;')
                             h1() #{item.post.title.toString()}
                             div(class='dropdown mb-3')
-                                //- todo: add index property to post
-                                a(class='btn-local dropdown-toggle' href='#' role='button' id='dropdownMenuLink' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 14px;') #{item.topic.title.toString()} #INDEX
-                                div(class='dropdown-menu' aria-labelledby='dropdownMenuLink')
+                                if item.others.length > 0
+                                    a(class='btn-local dropdown-toggle' href='#' role='button' id='dropdown-others' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 14px;') #{item.topic.title.toString()} ##{item.post.index.toString()}
+                                else
+                                    a(class='no-caret btn-local dropdown-toggle' href='#' role='button' id='dropdown-others' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 14px;') #{item.topic.title.toString()} ##{item.post.index.toString()}                                    
+                                div(class='dropdown-menu' aria-labelledby='dropdown-others')
                                     each other in item.others
-                                        a(class='btn-outgoing dropdown-item' href='#' style='white-space: normal; font-size: 14px;') #INDEX #{other.title.toString()}
+                                        a(class='btn-outgoing dropdown-item' href='#' style='white-space: normal; font-size: 14px;') ##{other.index.toString()} #{other.title.toString()}
                         if i == 0
                             div(id='last-post' class='collapse post-content')
                             a(class='btn-local' data-toggle='collapse' href='#last-post' role='button' aria-expanded='false' aria-controls='last-post' style='border-top: dashed 1px; text-align: center; font-size: 20px; user-select: none;') &#8633;
