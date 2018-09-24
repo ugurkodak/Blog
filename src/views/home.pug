@@ -57,10 +57,16 @@ html(lang='en')
                 div(class='align-self-start')
                     - var steps = '--steps:' + message.length + ';';
                     h1(class='typewriter' style=steps + ' --duration: 2s; --delay: 2s;') #{message}
-                nav(class='nav nav-pills d-flex flex-row justify-content-around' style='margin-top:50px;')
-                    a(class='btn-outgoing btn-current nav-link' href='/') All
-                        each tag, i in tags
-                            a(class='btn-outgoing nav-link' href='#') #{tag}
+                nav(class='nav nav-pills d-flex flex-row justify-content-around' style='margin-top:50px;') 
+                    if filter == ''
+                        a(class='btn-outgoing btn-current nav-link' href='/') All
+                    else 
+                        a(class='btn-outgoing nav-link' href='/') All
+                    each tag, i in tags
+                        if tag == filter
+                            a(href='/tag/' + tag class='btn-outgoing btn-current nav-link') #{tag}
+                        else
+                            a(href='/tag/' + tag class='btn-outgoing nav-link') #{tag}                            
                 div(class='d-flex flex-column mt-5 ml-2 mr-2' style='min-height: 100px;')
                     each item, i in data
                         -

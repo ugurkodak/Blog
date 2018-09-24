@@ -72,16 +72,27 @@ module.exports.displayHome = async (req, res) => {
             tags.push(tag.toString());
         });
     });
-
     tags = tags.filter((tag, pos) => {
         return tags.indexOf(tag) == pos;
     });
 
     let data = [];
-    let posts = await model.post.find({}).
+    let posts;
+    if (req.params.tag) {
+        let topics = await model.topic.find({tags: req.params.tag}).select('_id').catch((err) => {
+            return console.error(err);
+        });
+        posts = await model.post.find({'topic_id': {$in: topics}}).
         sort('-date').exec().catch((err) => {
             return console.error(err);
         });
+    } else {
+        posts = await model.post.find({}).
+        sort('-date').exec().catch((err) => {
+            return console.error(err);
+        });
+    }
+    
     for (let i = 0; i < posts.length; i++) {
         let topic = await model.topic.findOne({ _id: posts[i].topic_id }).
             exec().catch((err) => {
@@ -114,7 +125,8 @@ module.exports.displayHome = async (req, res) => {
         title: 'Ugur Kodak | Home',
         message: message,
         data: data,
-        tags: tags
+        tags: tags,
+        filter: req.params.tag || ''
     });
 }
 
@@ -197,87 +209,3 @@ module.exports.createNewPost = async (req, res) => {
     });
     res.redirect('/');
 }
-
-// module.exports.displayNewPost = (req, res) => {
-//     model.topic.find((err, topics) => {
-// 	if (err) {
-// 	    console.log(err);
-// 	    res.end(err);
-// 	} else {
-// 	    res.render("newpost", {
-// 		title: "Ugur Kodak | New Post",
-// 		topics: topics
-// 	    });
-// 	}
-//     });
-// }
-
-// module.exports.displayBlog = (req, res) => {
-//     model.topic.find((err, topics) => {
-// 	if (err) {
-// 	    console.log(err);
-// 	    res.end(err);
-// 	} else {
-// 	    //Sort posts by date
-// 	    for (let i = 0; i < topics.length; i++) {
-// 		topics[i].posts.sort((a, b) => {
-// 		    return b.date - a.date;
-// 		});
-// 	    }
-// 	    //Sort topics by most recent post
-// 	    topics.sort((a, b) => {
-// 		return b.posts[0].date - a.posts[0].date;
-// 	    });
-// 	    res.render("blog", {
-// 		title: "Ugur Kodak | Blog",
-// 		topics: topics
-// 	    });
-// 	}
-//     });
-// }
-
-// module.exports.displayPosts = (req, res) => {
-//     model.topic.find((err, topics) => {
-// 	if (err) {
-// 	    console.log(err);
-// 	    res.end(err);
-// 	} else {
-// 	    res.render("posts", {
-// 		title: "Ugur Kodak | Posts",
-// 		topics: topics
-// 	    });
-// 	}
-//     });
-// }
-
-// module.exports.createNewPost = (req, res) => {
-//     if (req.body.selectTopic == "new") {
-// 	model.topic.create(model.topic({
-// 	    title: req.body.topicTitle,
-// 	    description: req.body.topicDescription,
-// 	    posts: {
-// 		title: req.body.postTitle,
-// 		content: req.body.postContent
-// 	    }
-// 	}), (err, topic) => {
-// 	    if (err) {
-// 		console.log(err);
-// 		res.end(err);
-// 	    } else {	
-// 		res.redirect("/");
-// 	    }
-// 	});
-//     } else {
-// 	model.topic.findByIdAndUpdate(req.body.selectTopic, { $push: { posts: {
-// 	    title: req.body.postTitle,
-// 	    content: req.body.postContent
-// 	}}} ,(err, topic) => {
-// 	    if (err) {
-// 		console.log(err);
-// 		res.end(err);
-// 	    } else {	
-// 		res.redirect("/");
-// 	    }
-// 	});
-//     }
-// }
