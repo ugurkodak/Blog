@@ -26,32 +26,45 @@ style(type='text/css').
 	}
 	//- todo: consider changing post content into a more readible font
 	//- .post-content * {
-	//- 	font-family: 'Lucida Console';
+	//- 	font-family: 'Arial';
 	//- }
-	.btn-outgoing {
+	.btn-external {
 		border: none;
 		color: #b33;
+		outline: none;
+		user-select: none;
+	}
+	.btn-external:hover,
+	.btn-external:focus,
+	.btn-external:active {
+		color: #f55;		
+		background-color: transparent;
+		text-decoration: none;
+	}
+	.btn-outgoing {
+		border: none;
+		color: #48b;
 		outline: none;
 		user-select: none;
 	}
 	.btn-outgoing:hover,
 	.btn-outgoing:focus,
 	.btn-outgoing:active {
-		color: #f55;
+		color: #6ac;
 		background-color: transparent;
 	}
 	.btn-current {
-		color: #3b3;
+		color: #a0a;
 	}
 	.btn-local {
 		border: none;
-		color: #aaa;
+		color: #b83;
 		outline: none;
 	}
 	.btn-local:hover,
 	.btn-local:focus,
 	.btn-local:active {
-		color: #fff;
+		color: #fb4;
 		background-color: transparent;
 		text-decoration: none;
 	}

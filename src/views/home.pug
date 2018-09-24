@@ -6,6 +6,14 @@ html(lang='en')
                 border: none;
                 text-decoration: none;
             }
+            .no-caret {
+                cursor: default;
+            }
+            .no-caret:hover,
+            .no-caret:focus,
+            .no-caret:active {
+                color: #b83;
+            }
             .no-caret:after {
                 display: none;
             }
@@ -22,7 +30,7 @@ html(lang='en')
             .typewriter {
             font-family: 'Courier New', Courier, monospace;
             font-size: 16px;
-            color: #6ac;
+            color: #3b3;
             user-select: none;
             width: 0;
             overflow: hidden; /* Ensures the content is not revealed until the animation */
@@ -45,15 +53,20 @@ html(lang='en')
             @keyframes flicker {
             5% { opacity: 0.5 }
             10% { opacity: 1 }
-            20% { opacity: 0.2 }
-            50% { opacity: 1}
+            14% { opacity: 0.2 }
+            18% { opacity: 1}
             100% {white-space: normal }
             }
     body()
         div(class='container-fluid')
             div(class='d-flex flex-column')
-                div(class='align-self-start mt-2')
-                    h1(class='typewriter' style='--steps: 6; --duration: 0.5s; --delay: 0s;') Hello!
+                div(class='d-flex flex-row justify-content-between mt-2')
+                    div(class='')
+                        h1(class='typewriter' style='--steps: 6; --duration: 0.5s; --delay: 0s;') Hello!
+                    div()
+                        a(class='btn-external' href='https://github.com/ugurkodak') GitHub
+                        span(style='user-select:none;') &nbsp;|&nbsp;
+                        span(class='' href='#' style='user-select:none;') YouTube
                 div(class='align-self-start')
                     - var steps = '--steps:' + message.length + ';';
                     h1(class='typewriter' style=steps + ' --duration: 2s; --delay: 2s;') #{message}
@@ -66,7 +79,7 @@ html(lang='en')
                         if tag == filter
                             a(href='/tag/' + tag class='btn-outgoing btn-current nav-link') #{tag}
                         else
-                            a(href='/tag/' + tag class='btn-outgoing nav-link') #{tag}                            
+                            a(href='/tag/' + tag class='btn-outgoing nav-link') #{tag}
                 div(class='d-flex flex-column mt-5 ml-2 mr-2' style='min-height: 100px;')
                     each item, i in data
                         -
