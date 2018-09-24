@@ -87,6 +87,8 @@ html(lang='en')
                         if i == 0
                             div(id='last-post' class='collapse post-content')
                             a(class='btn-local' data-toggle='collapse' href='#last-post' role='button' aria-expanded='false' aria-controls='last-post' style='border-top: dashed 1px; text-align: center; font-size: 20px; user-select: none;') &#8633;
+                        else
+                            span(class='mb-4')
             include footer.pug
             script(src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js")
             if data[0]

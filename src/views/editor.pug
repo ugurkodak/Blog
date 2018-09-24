@@ -17,7 +17,7 @@ html(lang='en')
                     label(for='post-title') Post Title:&nbsp;
                     input(type='text' id='post-title' name='post_title' required)
                 div(class='form-group flex-row mb-0 pb-0')
-                    label(for='tags') Tags:&nbsp;
+                    label(id='label-tags' for='tags') Tags:&nbsp;
                     input(type='text' id='tags' name='tags' required)
                 textarea(id='content' name='content')
                 button(type='submit' class='btn-outgoing align-self-end') Submit
@@ -28,10 +28,15 @@ html(lang='en')
                     if ($("#topic-select").val() == "new") {
                         $("#topic-title").val('');
                         $("#topic-title").show();
+                        $("#tags").val('');
+                        $("#tags").show();
+                        $("#label-tags").show();
                     }
                     else {
                         $("#topic-title").hide();
                         $("#topic-title").val($("#topic-select").val());
+                        $("#tags").hide();
+                        $("#label-tags").hide();
                     }
                 }
             include footer.pug

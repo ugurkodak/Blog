@@ -26,20 +26,6 @@ router.get('/logout', (req, res, next) => {
     res.redirect('/');
 });
 
-// router.get("/newpost", controller.requireAuth, (req, res, next) => {
-//     controller.displayNewPost(req, res);
-// }).post("/newpost", controller.requireAuth, (req, res, next) => {
-//     controller.createNewPost(req, res);
-// });
-
-
-
-// router.get("/posts", controller.requireAuth, (req, res, next) => {
-//     controller.displayPosts(req, res);
-// })
-
-
-
 // router.get("/space", (req, res, next) => {
 //     res.render("unity3d/space", {
 // 	title: "Ugur Kodak | Space Invaders"

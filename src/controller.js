@@ -130,7 +130,6 @@ module.exports.displayHome = async (req, res) => {
     });
 }
 
-
 module.exports.displayLogin = (req, res) => {
     if (!req.user) {
         res.render('login', {
@@ -183,9 +182,14 @@ module.exports.createNewPost = async (req, res) => {
     let topic;
     let content;
     if (req.body.topic_select == 'new') {
+        let tags = req.body.tags.split(' ');
+        let formatted_tags = [];
+        tags.forEach(tag => {
+            formatted_tags.push(tag.charAt(0).toUpperCase() + tag.substr(1).toLocaleLowerCase());
+        });
         topic = await model.topic.create(model.topic({
             title: req.body.topic_title,
-            tags: req.body.tags.split(' ')
+            tags: formatted_tags
         })).catch((err) => {
             return console.log(err);
         });
