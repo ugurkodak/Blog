@@ -9,6 +9,10 @@ router.get('/tag/:tag', (req, res) => {
     controller.displayHome(req, res);
 });
 
+router.get('/post/:post_id', (req, res) => {
+    controller.displayPost(req, res);
+});
+
 router.get('/editor',controller.requireAuth, (req, res, next) => {
     controller.displayEditor(req, res);
 }).post('/editor', controller.requireAuth, (req, res, next) => {

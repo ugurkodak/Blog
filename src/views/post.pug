@@ -1,0 +1,55 @@
+html(lang='en')
+    head
+        include header.pug
+        style(type='text/css').
+            .nav-selected {
+                color: #a0a;
+            }
+            #dropdown-others:hover {
+                border: none;
+                text-decoration: none;
+            }
+            .no-caret {
+                cursor: default;
+            }
+            .no-caret:hover,
+            .no-caret:focus,
+            .no-caret:active {
+                color: #b83;
+            }
+            .no-caret:after {
+                display: none;
+            }
+            .dropdown-menu {
+                background-color: #000;
+                border-radius: 0;
+                overflow: auto;
+                overflow-x: hidden;
+                max-height: 300px;
+            }
+    body()
+        div(class='container-fluid')
+            div(class='d-flex flex-column mt-2')
+                a(class='click click-request mb-4' href='/') <- Return
+                -
+                    let date = post.date.toLocaleDateString("en-US", {
+                        year: 'numeric', month: 'long', day: 'numeric'
+                    });
+                div(style='font-size: 15px; user-select: none;') #{date}
+                div(class='d-flex flex-row' style='flex-wrap: wrap;')
+                    a(class='click click-request' href='/post/' + post._id style='font-size: 2em;') #{post.title.toString()}
+                    div(class='dropdown mb-3')
+                        if others.length > 0
+                            a(class='click click-local dropdown-toggle' href='#' role='button' id='dropdown-others' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 15px;') #{topic.title.toString()} ##{post.index.toString()}
+                        else
+                            a(class='no-caret click click-local dropdown-toggle' href='#' role='button' id='dropdown-others' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 15px;') #{topic.title.toString()} ##{post.index.toString()}
+                        div(class='dropdown-menu' aria-labelledby='dropdown-others')
+                            each other in others
+                                a(class='click click-request dropdown-item' href='/post/' + other._id style='white-space: normal; font-size: 15px;') ##{other.index.toString()} #{other.title.toString()}
+                div(id='post')
+            include footer.pug
+            script(src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js")
+            //- todo: solve the escaped interpolation for the markdown rendering. chrome throws warning.
+            script().
+                let md = window.markdownit();
+                $("#post").append(md.render(!{JSON.stringify(content.text)}));

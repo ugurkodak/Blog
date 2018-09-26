@@ -79,7 +79,8 @@ module.exports.displayHome = async (req, res) => {
     let data = [];
     let posts;
     if (req.params.tag) {
-        let topics = await model.topic.find({tags: req.params.tag}).select('_id').catch((err) => {
+        let topics = await model.topic.find({tags: req.params.tag}).select('_id')
+        .catch((err) => {
             return console.error(err);
         });
         posts = await model.post.find({'topic_id': {$in: topics}}).
@@ -87,8 +88,7 @@ module.exports.displayHome = async (req, res) => {
             return console.error(err);
         });
     } else {
-        posts = await model.post.find({}).
-        sort('-date').exec().catch((err) => {
+        posts = await model.post.find({}).sort('-date').exec().catch((err) => {
             return console.error(err);
         });
     }
@@ -99,14 +99,15 @@ module.exports.displayHome = async (req, res) => {
                 return console.error(err);
             });
         let others = await model.post.find({}).
-            where('topic_id').equals(topic._id).where('_id').ne(posts[i]._id).sort('-date').exec().catch((err) => {
+            where('topic_id').equals(topic._id).where('_id').ne(posts[i]._id)
+            .sort('-date').exec().catch((err) => {
                 return console.error(err);
             });
         if (i == 0) {
-            let content = await model.content.findOne({ _id: posts[i].content_id }).
-                exec().catch((err) => {
+            let content = await model.content.findOne({ _id: posts[i].content_id })
+            .exec().catch((err) => {
                     return console.error(err);
-                });;
+                });
             data.push({
                 post: posts[i],
                 topic: topic,
@@ -127,6 +128,33 @@ module.exports.displayHome = async (req, res) => {
         data: data,
         tags: tags,
         filter: req.params.tag || ''
+    });
+}
+
+module.exports.displayPost = async (req, res) => {
+    let post = await model.post.findOne({ _id: req.params.post_id }).exec()
+    .catch((err) => {
+            return console.error(err);
+        });
+    let topic = await model.topic.findOne({ _id: post.topic_id }).
+        exec().catch((err) => {
+            return console.error(err);
+        });
+    let content = await model.content.findOne({ _id: post.content_id })
+        .exec().catch((err) => {
+            return console.error(err);
+        });
+    let others = await model.post.find({}).
+        where('topic_id').equals(topic._id).where('_id').ne(post._id)
+        .sort('-date').exec().catch((err) => {
+            return console.error(err);
+        });
+    return res.render('post', {
+        title: 'Ugur Kodak | ' + post.title,
+        post: post,
+        topic: topic,
+        content: content,
+        others: others
     });
 }
 
