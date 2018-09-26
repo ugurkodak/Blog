@@ -9,7 +9,7 @@ html(lang='en')
                 div(class='form-group flex-row mb-0 pb-0')
                     label(for='topic-select') Topic Title:&nbsp;
                     input(type='text' id='topic-title' name='topic_title' autofocus)
-                    select(id='topic-select' name='topic_select' class='btn-local' onchange='toggleTopicInput()')
+                    select(id='topic-select' name='topic_select' class='click click-local' onchange='toggleTopicInput()')
                         option(value='new') New Topic
                         each topic in topics
                             option(value= topic._id) #{topic.title}
@@ -20,7 +20,7 @@ html(lang='en')
                     label(id='label-tags' for='tags') Tags:&nbsp;
                     input(type='text' id='tags' name='tags' required)
                 textarea(id='content' name='content')
-                button(type='submit' class='btn-outgoing align-self-end') Submit
+                button(type='submit' class='click click-request align-self-end') Submit
             script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
             script().
                 var simpleMDE = new SimpleMDE({ element: document.getElementById('content') });

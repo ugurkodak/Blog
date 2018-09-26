@@ -24,47 +24,38 @@ style(type='text/css').
 	input {
 		border: none;
 	}
-	//- todo: consider changing post content into a more readible font
-	//- .post-content * {
-	//- 	font-family: 'Arial';
-	//- }
-	.btn-external {
+	.click {
 		border: none;
+		outline: none;
+		user-select: none;
+	}
+	.click:hover,
+	.click:focus,
+	.click:active {
+		background-color: transparent;
+		text-decoration: none;
+	}
+	.click-external {
 		color: #b33;
-		outline: none;
-		user-select: none;
 	}
-	.btn-external:hover,
-	.btn-external:focus,
-	.btn-external:active {
+	.click-external:hover,
+	.click-external:focus,
+	.click-external:active {
 		color: #f55;		
-		background-color: transparent;
-		text-decoration: none;
 	}
-	.btn-outgoing {
-		border: none;
+	.click-request {
 		color: #48b;
-		outline: none;
-		user-select: none;
 	}
-	.btn-outgoing:hover,
-	.btn-outgoing:focus,
-	.btn-outgoing:active {
+	.click-request:hover,
+	.click-request:focus,
+	.click-request:active {
 		color: #6ac;
-		background-color: transparent;
 	}
-	.btn-current {
-		color: #a0a;
-	}
-	.btn-local {
-		border: none;
+	.click-local {
 		color: #b83;
-		outline: none;
 	}
-	.btn-local:hover,
-	.btn-local:focus,
-	.btn-local:active {
+	.click-local:hover,
+	.click-local:focus,
+	.click-local:active {
 		color: #fb4;
-		background-color: transparent;
-		text-decoration: none;
 	}

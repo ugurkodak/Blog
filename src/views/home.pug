@@ -2,6 +2,9 @@ html(lang='en')
     head
         include header.pug
         style(type='text/css').
+            .nav-selected {
+                color: #a0a;
+            }
             #dropdown-others:hover {
                 border: none;
                 text-decoration: none;
@@ -61,47 +64,54 @@ html(lang='en')
         div(class='container-fluid')
             div(class='d-flex flex-column')
                 div(class='d-flex flex-row justify-content-between mt-2')
-                    div(class='')
-                        h1(class='typewriter' style='--steps: 6; --duration: 0.5s; --delay: 0s;') Hello!
-                    div()
-                        a(class='btn-external' href='https://github.com/ugurkodak') GitHub
-                        span(style='user-select:none;') &nbsp;|&nbsp;
-                        span(class='' href='#' style='user-select:none;') YouTube
-                div(class='align-self-start')
-                    - var steps = '--steps:' + message.length + ';';
-                    h1(class='typewriter' style=steps + ' --duration: 2s; --delay: 2s;') #{message}
-                nav(class='nav nav-pills d-flex flex-row justify-content-around' style='margin-top:50px;') 
+                    div(class='d-flex flex-column col-6 p-0')
+                        div(class='d-flex flex-column align-self-start')
+                            h1(class='typewriter' style='--steps: 6; --duration: 0.5s; --delay: 0s;') Hello!
+                            - var steps = '--steps:' + message.length + ';';
+                            h1(class='typewriter' style=steps + ' --duration: 2s; --delay: 2s;') #{message}
+                    div(class='d-flex flex-column col-6 p-0')
+                        nav(class='nav nav-pills d-flex flex-row justify-content-end')
+                            a(class='click click-external nav-link pl-0 pr-0' href='https://github.com/ugurkodak') GitHub
+                            span(class='nav-link pl-0 pr-0' style='user-select:none;') &nbsp;|&nbsp;
+                            a(class='click click-external nav-link pl-0 pr-0' href='https://www.linkedin.com/in/ugurkodak/') LinkedIn
+                            span(class='nav-link pl-0 pr-0' style='user-select:none;') &nbsp;|&nbsp;
+                            a(class='click click-external nav-link pl-0 pr-0' href='https://www.linkedin.com/in/ugurkodak/') LinkedIn
+                            span(class='nav-link pl-0 pr-0' style='user-select:none;') &nbsp;|&nbsp;
+                            a(class='click click-external nav-link pl-0 pr-0' href='https://www.linkedin.com/in/ugurkodak/') LinkedIn
+                nav(class='nav nav-pills d-flex flex-row mt-4') 
+                    span(class='nav-link pl-0') Filter:
                     if filter == ''
-                        a(class='btn-outgoing btn-current nav-link' href='/') All
+                        a(class='click click-request nav-selected nav-link pl-0 pr-0' href='/') All
                     else 
-                        a(class='btn-outgoing nav-link' href='/') All
+                        a(class='click click-request nav-link pl-0 pr-0' href='/') All
                     each tag, i in tags
                         if tag == filter
-                            a(href='/tag/' + tag class='btn-outgoing btn-current nav-link') #{tag}
+                            span(class='nav-link') |
+                            a(href='/tag/' + tag class='click click-request nav-selected nav-link pl-0 pr-0') #{tag}
                         else
-                            a(href='/tag/' + tag class='btn-outgoing nav-link') #{tag}
+                            span(class='nav-link') |
+                            a(href='/tag/' + tag class='click click-request nav-link pl-0 pr-0') #{tag}
                 div(class='d-flex flex-column mt-5 ml-2 mr-2' style='min-height: 100px;')
                     each item, i in data
                         -
                             let date = item.post.date.toLocaleDateString("en-US", {
                                 year: 'numeric', month: 'long', day: 'numeric'
                             });
-                        div(style='font-size: 14') #{date}
+                        div(style='font-size: 15px; user-select: none;') #{date}
                         div(class='d-flex flex-row' style='flex-wrap: wrap;')
-                            h1() #{item.post.title.toString()}
+                            a(class='click click-request' href='#' style='font-size: 2em;') #{item.post.title.toString()}
                             div(class='dropdown mb-3')
                                 if item.others.length > 0
-                                    a(class='btn-local dropdown-toggle' href='#' role='button' id='dropdown-others' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 14px;') #{item.topic.title.toString()} ##{item.post.index.toString()}
+                                    a(class='click click-local dropdown-toggle' href='#' role='button' id='dropdown-others' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 14px;') #{item.topic.title.toString()} ##{item.post.index.toString()}
                                 else
-                                    a(class='no-caret btn-local dropdown-toggle' href='#' role='button' id='dropdown-others' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 14px;') #{item.topic.title.toString()} ##{item.post.index.toString()}                                    
+                                    a(class='no-caret click click-local dropdown-toggle' href='#' role='button' id='dropdown-others' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='border: none; font-size: 14px;') #{item.topic.title.toString()} ##{item.post.index.toString()}                                    
                                 div(class='dropdown-menu' aria-labelledby='dropdown-others')
                                     each other in item.others
-                                        a(class='btn-outgoing dropdown-item' href='#' style='white-space: normal; font-size: 14px;') ##{other.index.toString()} #{other.title.toString()}
+                                        a(class='click click-request dropdown-item' href='#' style='white-space: normal; font-size: 14px;') ##{other.index.toString()} #{other.title.toString()}
                         if i == 0
                             div(id='last-post' class='collapse post-content')
-                            a(class='btn-local' data-toggle='collapse' href='#last-post' role='button' aria-expanded='false' aria-controls='last-post' style='border-top: dashed 1px; text-align: center; font-size: 20px; user-select: none;') &#8633;
-                        else
-                            span(class='mb-4')
+                            a(class='click click-local' data-toggle='collapse' href='#last-post' role='button' aria-expanded='false' aria-controls='last-post' style='border-top: dashed 1px; text-align: center; font-size: 20px; user-select: none;') &#8633;
+                        span(class='mb-4')
             include footer.pug
             script(src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js")
             if data[0]
