@@ -1,8 +1,7 @@
 let mongoose = require('mongoose');
 let passportLocalMongoose = require('passport-local-mongoose');
-let keys = require('./keys');
 
-mongoose.connect(keys.dbURI, {useMongoClient: true});
+mongoose.connect(process.env.DB_URI, {useMongoClient: true});
 
 let topic = mongoose.model('topic', new mongoose.Schema({
     title: String,

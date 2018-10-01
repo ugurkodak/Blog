@@ -46,7 +46,7 @@ html(lang='en')
                         div(class='dropdown-menu' aria-labelledby='dropdown-others')
                             each other in others
                                 a(class='click click-request dropdown-item' href='/post/' + other._id style='white-space: normal; font-size: 15px;') ##{other.index.toString()} #{other.title.toString()}
-                div(id='post')
+                div(class='post-content' id='post')
             include footer.pug
             script(src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.4.2/markdown-it.min.js")
             //- todo: solve the escaped interpolation for the markdown rendering. chrome throws warning.
